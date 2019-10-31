@@ -1,3 +1,5 @@
+local generateId = require('/functions/generateId')
+
 local Something = {}
 
 function Something:new(name, coordX, coordY, health, tags)
@@ -6,8 +8,11 @@ function Something:new(name, coordX, coordY, health, tags)
 		coordX = coordX or 0,
 		coordY = coordY or 0,
 		name = name or '',
-		health = health or 1
+		health = health or 1,
+		id = generateId()
 	}
+
+	print(generateId())
 
 	function newObj:onDead()
     return nil

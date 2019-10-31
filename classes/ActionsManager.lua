@@ -108,6 +108,7 @@ function ActionsManager:new()
   function newObj:executeActions()
     for key, action in pairs(self.actions) do
       self:executeAction(action)
+      self.actions[key] = nil
     end
   end
 

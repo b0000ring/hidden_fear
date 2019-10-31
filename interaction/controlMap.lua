@@ -1,10 +1,10 @@
 local inputActions = {}
-inputActions[65] = 'move_up'
-inputActions[66] = 'move_down'
-inputActions[67] = 'move_right'
-inputActions[68] = 'move_left'
-inputActions[32] = 'wait'
-inputActions[122] = 'pickup'
-inputActions[120] = 'heal'
-inputActions[99] = 'drop_weapon'
+inputActions['up'] = 'move_up'
+inputActions['down'] = 'move_down'
+inputActions['right'] = 'move_right'
+inputActions['left'] = 'move_left'
+inputActions['space'] = 'wait'
+inputActions['z'] = 'pickup'
+inputActions['x'] = 'heal'
+inputActions['c'] = 'drop_weapon'
 return inputActions

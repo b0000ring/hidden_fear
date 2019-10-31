@@ -4,7 +4,8 @@ local OBJECTS = {
   door = 'door',
   horizontal_wall = 'horizontal_wall',
   tree = 'tree',
-  vertical_wall = 'vertical_wall'
+  vertical_wall = 'vertical_wall',
+  grass = 'grass'
 }
 
 return OBJECTS

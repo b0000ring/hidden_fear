@@ -1,16 +1,18 @@
-local curses = require "curses"
-local stdscr = curses.initscr ()
-
 local inputActions = require('/interaction/controlMap')
 
 local controlManager = {}
 
-function controlManager:listen()
-  local key = stdscr:getch ()
+function controlManager:init(keyUpCallback)
+  function love.keypressed(key)
+    local action = self:makeAction(key)
+    if action then keyUpCallback() end
+  end
+end
+
+function controlManager:makeAction(key)
   if inputActions[key] then 
     mediator:call('control.' .. inputActions[key])
-  else 
-    self:listen()
+    return true
   end
 end
 

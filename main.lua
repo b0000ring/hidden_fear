@@ -15,16 +15,15 @@ local viewer = require('interaction/viewer')
 local loadGame = require('functions/loadGame')
 local listenMonstersDead = require('functions/listenMonstersDead')
 local checkOver = require('functions/checkOver')
+local actionsManager = ActionsManager:new()
 
 function startGame()  
   math.randomseed( os.time() )
   collisionManager:setStores(creaturesStore.items, itemsStore.items, objectsStore.items)
-  viewer.init()
-  viewer:showScreen('start')
-  viewer:showScreen('loading')
+  viewer:init(onUpdate)
+  controlManager:init(onKeyPress)
   loadGame(creaturesStore, itemsStore, objectsStore)
   listenMonstersDead(itemsStore)
-  startGameLoop()
 end
 
 function checkItems() 
@@ -33,30 +32,22 @@ function checkItems()
   itemsStore:checkItems()
 end
 
-function startGameLoop()
-  local actionsManager = ActionsManager:new()
-  local overType = nil
+function onUpdate()
   viewer:view(creaturesStore.items, objectsStore.items, itemsStore.items, creaturesStore:findPlayer())
-  controlManager:listen()
+end
+
+function onKeyPress()
+  local overType = nil
   creaturesStore:makeActions()
   actionsManager:executeActions()
   checkItems()
 
-  overType = checkOver(viewer)
+  -- overType = checkOver(viewer)
 
-  if not overType then
-    startGameLoop()
-  else
-    if overType == 'dead' then viewer:showScreen('dead') end
-    if overType == 'win' then viewer:showScreen('win') end
-  end
+  -- if overType then
+  --   if overType == 'dead' then viewer:showScreen('dead') end
+  --   if overType == 'win' then viewer:showScreen('win') end
+  -- end
 end
 
-local function err (err)
-  curses.endwin ()
-  print "Caught an error:"
-  print (debug.traceback (err, 2))
-  os.exit (2)
-end
-
-xpcall (startGame, err)
+startGame()
