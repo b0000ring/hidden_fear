@@ -93,13 +93,15 @@ function viewer:viewMap(playerCoords)
       for j = playerCoords.x - config.mapPadding, playerCoords.x + config.mapPadding do
         love.graphics.draw( self.grassMap[j][i], xoffset, yoffset)
         if self.map[j][i] then
-          love.graphics.draw( self.map[j][i], xoffset, yoffset)
+          local drawable = self.map[j][i]
+          love.graphics.draw(drawable, xoffset, yoffset - (10 + drawable:getHeight() - 32))
         end
         xoffset = xoffset + 32
       end
       xoffset = 0
       yoffset = yoffset + 32
     end
+    love.graphics.draw(self:getSprite('night_effect'), 0, 0)
   end
 end
 
