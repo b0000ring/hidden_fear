@@ -88,14 +88,15 @@ function Creature:new(name, coordX, coordY, health, weapon)
 
     -- decide where to go by x
     if xRange ~= 0 then
+      local step = {}
       if xRange <= self.visionRange and yRange <= self.visionRange then
         if self.coordX > playerCoords.x then
-          return {
+          step =  {
             direction = DIRECTIONS.x,
             value = -1
           }
         else
-          return {
+          step =  {
             direction = DIRECTIONS.x,
             value = 1
           }
@@ -103,11 +104,15 @@ function Creature:new(name, coordX, coordY, health, weapon)
       else
         -- it randomize x and y directions
         if math.floor(math.random() + 0.5) == 1 then
-          return {
+          step =  {
             direction = DIRECTIONS.x,
             value = math.random(-1, 1)
           }
         end
+      end
+
+      if step.value and not collisionManager:findCollision(self.coordX + step.value, self.coordY ) then
+        return step
       end
     end
 

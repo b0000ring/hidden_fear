@@ -8,9 +8,9 @@ local itemsStore = require('stores/items')
 local objectsStore = require('stores/objects')
 -- classes
 local ActionsManager = require('classes/ActionsManager')
--- interaction
-local controlManager = require('interaction/controlManager')
-local viewer = require('interaction/viewer')
+-- engine
+local controlManager = require('engine/controlManager')
+local viewer = require('engine/viewer')
 -- functions
 local loadGame = require('functions/loadGame')
 local listenMonstersDead = require('functions/listenMonstersDead')

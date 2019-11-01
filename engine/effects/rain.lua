@@ -7,12 +7,15 @@ local rain = {
 
 function rain:generateBlobs(count)
   for i = 1, count do
-    
+    self:generateBlob()
   end
 end
 
 function rain:generateBlob()
-
+  table.insert(self.blobs, {
+    length = math.floor(math.random(2, 5))
+    frames = math.floor(math.random(5, 50))
+  })
 end
 
 function rain:generateSplash()

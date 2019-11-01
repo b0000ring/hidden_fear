@@ -1,12 +1,12 @@
 -- screens
-local start = require('interaction/screens/start')
-local loading = require('interaction/screens/loading')
-local dead = require('interaction/screens/dead')
-local win = require('interaction/screens/win')
+local start = require('engine/screens/start')
+local loading = require('engine/screens/loading')
+local dead = require('engine/screens/dead')
+local win = require('engine/screens/win')
 -- maps
-local spritesMap = require('interaction/spritesMap')
+local spritesMap = require('engine/spritesMap')
 -- view interface function
-local viewInterface = require('interaction/interface')
+local viewInterface = require('engine/interface')
 
 local viewer = {
   screens = {

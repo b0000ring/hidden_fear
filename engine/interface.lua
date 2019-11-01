@@ -1,4 +1,4 @@
-local DescriptionManager = require('interaction/descriptionManager')
+local DescriptionManager = require('engine/descriptionManager')
 local descriptionManager = DescriptionManager:new()
 function viewInterface(stdscr, player)
   stdscr:addstr('\n_________________________________________\n\n')
