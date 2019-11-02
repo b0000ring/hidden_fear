@@ -9,6 +9,7 @@ local spritesMap = require('engine/spritesMap')
 local viewInterface = require('engine/interface')
 -- effects
 local rain = require('engine/effects/rain')
+local lightning = require('engine/effects/lightning')
 
 local viewer = {
   screens = {
@@ -105,6 +106,7 @@ function viewer:viewMap(playerCoords)
     end
     rain:makeFrame()
     love.graphics.draw(self:getSprite('night_effect'), 0, 0)
+    lightning:makeFrame()
   end
 end
 

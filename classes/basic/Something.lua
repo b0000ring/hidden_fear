@@ -12,8 +12,6 @@ function Something:new(name, coordX, coordY, health, tags)
 		id = generateId()
 	}
 
-	print(generateId())
-
 	function newObj:onDead()
     return nil
   end
