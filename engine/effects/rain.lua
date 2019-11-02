@@ -1,40 +1,43 @@
 local rain = {
   blobs = {},
-  maxBlobs = 20,
-  splashes = {},
-  maxSplashes = 20
+  maxBlobs = 100,
 }
-
-function rain:generateBlobs(count)
-  for i = 1, count do
-    self:generateBlob()
-  end
-end
 
 function rain:generateBlob()
   table.insert(self.blobs, {
-    length = math.floor(math.random(2, 5))
-    frames = math.floor(math.random(5, 50))
+    length = math.floor(math.random(5, 10)),
+    frames = 30,
+    x = math.floor(math.random(-500, 600)),
+    y = 0,
   })
 end
 
-function rain:generateSplash()
-
+function rain:render()
+  local r, g, b, a = love.graphics.getColor( )
+  love.graphics.setColor(0, 83, 105)
+  for key, val in pairs(self.blobs) do
+    love.graphics.line(val.x, val.y, val.x + val.length, val.y + val.length)
+  end
+  love.graphics.setColor(r, g, b, a)
 end
 
-function rain:moveALl()
+function rain:moveAll()
   for key, val in pairs(self.blobs) do
-
-  end
-
-  for key, val in pairs(self.splashes) do
-
+    val.x = val.x + 20
+    val.y = val.y + 20
+    val.frames = val.frames - 1
+    if val.frames <= 0 then
+      self.blobs[key] = nil
+    end
   end
 end
 
 function rain:makeFrame()
   self:moveAll()  
-  if self.blobs < self.maxBlobs then
-    self:generateBlobs(self.maxBlobs - self.blobs)
+  self:render()
+  if #self.blobs < self.maxBlobs then
+    self:generateBlob()
   end
 end
+
+return rain

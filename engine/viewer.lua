@@ -7,6 +7,8 @@ local win = require('engine/screens/win')
 local spritesMap = require('engine/spritesMap')
 -- view interface function
 local viewInterface = require('engine/interface')
+-- effects
+local rain = require('engine/effects/rain')
 
 local viewer = {
   screens = {
@@ -101,6 +103,7 @@ function viewer:viewMap(playerCoords)
       xoffset = 0
       yoffset = yoffset + 32
     end
+    rain:makeFrame()
     love.graphics.draw(self:getSprite('night_effect'), 0, 0)
   end
 end
