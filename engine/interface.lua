@@ -1,15 +1,29 @@
 local DescriptionManager = require('engine/descriptionManager')
 local descriptionManager = DescriptionManager:new()
-function viewInterface(stdscr, player)
-  stdscr:addstr('\n_________________________________________\n\n')
-  stdscr:addstr('health: ' .. player.health .. ' | ' .. 'mental: ' .. player.mental .. ' | ' .. 'heals: ' .. player.heals .. '\n\n')
-  stdscr:addstr('weapon: ' .. player.weapon.name .. ' | ' .. 'power: ' .. player.weapon.power .. '\n\n')
-  stdscr:addstr('pistol bullets: ' .. player.bullets.pistol .. ' | ' .. 'shotgun bullets: ' .. player.bullets.shotgun .. '\n\n')
-  stdscr:addstr('x: ' .. player.coordX .. ' | y ' .. player.coordY .. '\n')
-  stdscr:addstr('\n_________________________________________\n\n')
+font = love.graphics.newFont('assets/fonts/manaspc.ttf')
+
+function viewInterface(sprites, player)
+  local r, g, b, a = love.graphics.getColor( )
+  love.graphics.setColor(0, 0, 0)
+  love.graphics.rectangle( 'fill', 672, 0, 352, 672 )
+  love.graphics.setColor(r, g, b, a)
+  love.graphics.printf('Health: ' .. player.health , font,  680, 30, 352, 'left', 0 , 1.5)
+  love.graphics.printf('Mental: ' .. player.mental , font,  680, 60, 352, 'left', 0 , 1.5)
+  love.graphics.printf('Heals: ' .. player.heals, font,  680, 90, 352, 'left', 0 , 1.5)
+  love.graphics.printf('_________________________________________', font,  680, 120, 352, 'left', 0 , 1.5)
+  love.graphics.printf('Weapon: ' .. player.weapon.name , font,  680, 160, 352, 'left', 0 , 1.5)
+  love.graphics.printf('Power: ' .. player.weapon.power, font,  680, 190, 352, 'left', 0 , 1.5)
+  love.graphics.printf('Pistol bullets: ' .. player.bullets.pistol, font,  680, 220, 352, 'left', 0 , 1.5)
+  love.graphics.printf('Shotgun bullets: ' .. player.bullets.shotgun, font,  680, 250, 352, 'left', 0 , 1.5)
+  love.graphics.printf('_________________________________________', font,  680, 280, 352, 'left', 0 , 1.5)
+  love.graphics.printf('X: ' .. player.coordX .. ' | Y ' .. player.coordY, font,  680, 320, 352, 'left', 0 , 1.5)
+  love.graphics.printf('_________________________________________', font,  680, 350, 352, 'left', 0 , 1.5)
+  
   local actionDescriptions = descriptionManager:getActions()
+  local basicHeight = 390
   for key, val in pairs(actionDescriptions) do
-    stdscr:addstr(val .. '\n\n')
+    love.graphics.printf(val, font,  680, basicHeight, 300, 'left', 0 , 1.2)
+    basicHeight = basicHeight + 40
   end
 end
 

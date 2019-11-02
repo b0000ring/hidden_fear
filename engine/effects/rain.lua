@@ -6,7 +6,7 @@ local rain = {
 function rain:generateBlob()
   table.insert(self.blobs, {
     length = math.floor(math.random(5, 10)),
-    frames = 30,
+    frames = 20,
     x = math.floor(math.random(-500, 600)),
     y = 0,
   })
@@ -23,8 +23,8 @@ end
 
 function rain:moveAll()
   for key, val in pairs(self.blobs) do
-    val.x = val.x + 20
-    val.y = val.y + 20
+    val.x = val.x + 30
+    val.y = val.y + 30
     val.frames = val.frames - 1
     if val.frames <= 0 then
       self.blobs[key] = nil

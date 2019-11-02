@@ -8,7 +8,11 @@ function descriptionManager:new()
     actions = {
       [1] = '',
       [2] = '',
-      [3] = ''
+      [3] = '',
+      [4] = '',
+      [5] = '',
+      [6] = '',
+      [7] = '',
     },
   }
 
@@ -24,7 +28,7 @@ function descriptionManager:new()
       if type == DESCRIPTION_TYPES.move then
         text = action.actorName .. ' move' 
       elseif type == DESCRIPTION_TYPES.attack then 
-        text = action.actorName .. ' attack ' .. action.targetName .. ' by ' .. action.instrumentName .. ' and make ' .. action.points .. ' point of damage'
+        text = action.actorName .. ' makes ' .. action.points .. ' damage to ' .. action.targetName .. ' by ' .. action.instrumentName
       elseif type == DESCRIPTION_TYPES.wait then 
         text = action.actorName .. ' wait'
       elseif type == DESCRIPTION_TYPES.hiding then

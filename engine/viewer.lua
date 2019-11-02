@@ -89,25 +89,23 @@ function viewer:generateGrass()
 end
 
 function viewer:viewMap(playerCoords)
-  function love.draw(drawable)
-    local yoffset = 0
-    for i = playerCoords.y - config.mapPadding, playerCoords.y + config.mapPadding do
-      local xoffset = 0
-      for j = playerCoords.x - config.mapPadding, playerCoords.x + config.mapPadding do
-        love.graphics.draw( self.grassMap[j][i], xoffset, yoffset)
-        if self.map[j][i] then
-          local drawable = self.map[j][i]
-          love.graphics.draw(drawable, xoffset, yoffset - (10 + drawable:getHeight() - 32))
-        end
-        xoffset = xoffset + 32
+  local yoffset = 0
+  for i = playerCoords.y - config.mapPadding, playerCoords.y + config.mapPadding do
+    local xoffset = 0
+    for j = playerCoords.x - config.mapPadding, playerCoords.x + config.mapPadding do
+      love.graphics.draw( self.grassMap[j][i], xoffset, yoffset)
+      if self.map[j][i] then
+        local drawable = self.map[j][i]
+        love.graphics.draw(drawable, xoffset, yoffset - (10 + drawable:getHeight() - 32))
       end
-      xoffset = 0
-      yoffset = yoffset + 32
+      xoffset = xoffset + 32
     end
-    rain:makeFrame()
-    love.graphics.draw(self:getSprite('night_effect'), 0, 0)
-    lightning:makeFrame()
+    xoffset = 0
+    yoffset = yoffset + 32
   end
+  rain:makeFrame()
+  love.graphics.draw(self:getSprite('night_effect'), 0, 0)
+  lightning:makeFrame()
 end
 
 function viewer:view(creatures, objects, items, player)
@@ -115,8 +113,10 @@ function viewer:view(creatures, objects, items, player)
   self:addToMap(items)
   self:addToMap(creatures)
   self:addToMap(objects)
-  self:viewMap(player:getCoords())
-  -- viewInterface(stdscr, player)
+  function love.draw(drawable)
+    self:viewMap(player:getCoords())
+    viewInterface(self.sprites, player)
+  end
 end
 
 return viewer
