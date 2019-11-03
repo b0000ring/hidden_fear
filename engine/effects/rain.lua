@@ -6,9 +6,9 @@ local rain = {
 function rain:generateBlob()
   table.insert(self.blobs, {
     length = math.floor(math.random(5, 10)),
-    frames = 20,
+    frames = 25,
     x = math.floor(math.random(-500, 600)),
-    y = 0,
+    y = -50,
   })
 end
 
