@@ -24,32 +24,31 @@ function audioManager:play(key)
       love.audio.play(self.audio.step)
     elseif type == DESCRIPTION_TYPES.attack then 
       if action.instrumentName == 'claws' then 
-        love.audio.play(self.audio.hit_claws)
+        love.audio.play(self.audio.claws)
       elseif action.instrumentName == 'knife' then
-        love.audio.play(self.audio.hit_knife)
-      -- elseif action.instrumentName == 'magic' then
-      --   love.audio.play(self.audio.magic)
-      -- elseif action.instrumentName == 'teeths' then
-      --   love.audio.play(self.audio.teeths)
-      -- else if action.instrumentName == 'fists' then
-      --   love.audio.play(self.audio.hit_knife)
+        love.audio.play(self.audio.knife)
+      elseif action.instrumentName == 'magic' then
+        love.audio.play(self.audio.magic)
+      elseif action.instrumentName == 'teeths' then
+        love.audio.play(self.audio.teeths)
+      elseif action.instrumentName == 'fists' then
+        love.audio.play(self.audio.fists)
       elseif action.instrumentName == 'shotgun' then
         love.audio.play(self.audio.shotgun)
       elseif action.instrumentName == 'pistol' then
         love.audio.play(self.audio.pistol)
       end
     elseif type == DESCRIPTION_TYPES.wait then 
-     
+      love.audio.play(self.audio.wait)
+    -- add trap event somewhere
     elseif type == DESCRIPTION_TYPES.hiding then
-    
-    elseif type == DESCRIPTION_TYPES.over then
-     
+      love.audio.play(self.audio.hiding)
     elseif type == DESCRIPTION_TYPES.pickup then
       love.audio.play(self.audio.pickup)
     elseif type == DESCRIPTION_TYPES.fail_pickup then
       love.audio.play(self.audio.impossible)
     elseif type == DESCRIPTION_TYPES.dies then
-      
+      love.audio.play(self.audio.dead)
     elseif type == DESCRIPTION_TYPES.heals then
       love.audio.play(self.audio.health)
     elseif type == DESCRIPTION_TYPES.heals_failed then
@@ -57,9 +56,11 @@ function audioManager:play(key)
     elseif type == DESCRIPTION_TYPES.open then
       love.audio.play(self.audio.open_door)
     elseif type == DESCRIPTION_TYPES.drop_weapon then
-     
+      love.audio.play(self.audio.drop)
     elseif type == DESCRIPTION_TYPES.cant_open then
       love.audio.play(self.audio.impossible)
+    elseif type == 'thunder' then
+      love.audio.play(self.audio.thunder)
     end
   end
 end

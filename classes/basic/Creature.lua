@@ -47,7 +47,7 @@ function Creature:new(name, coordX, coordY, health, weapon)
   end
 
   function newObj:move(direction, value) 
- 
+    -- TODO REFACTORING!!!
     return function()
       local newDirection = nil
       local newValue = nil
@@ -59,7 +59,7 @@ function Creature:new(name, coordX, coordY, health, weapon)
         newValue = nil
       end
 
-      if value ~= 0 then 
+      if value ~= 0 and newValue ~= 0 then 
         local newCoords = {}
         if(newDirection == DIRECTIONS.y or direction == DIRECTIONS.y) then
           newCoords = {

@@ -1,3 +1,6 @@
+-- classes
+local ActionDescription = require('classes/basic/ActionDescription')
+
 local lightning = {
   timer = 150,
   pause = 0,
@@ -28,6 +31,7 @@ function lightning:makeFrame()
       self.timer = self.timer - 1
       if self.timer == 0 and self.lightnings == 0 then
         self:generateLightning()
+        mediator:call('description.addAction', ActionDescription:new(nil, 'thunder'))
       end
     end
   end
