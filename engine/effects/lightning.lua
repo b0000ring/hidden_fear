@@ -9,14 +9,12 @@ function lightning:generateLightning()
 end
 
 function lightning:flashLightning()
-    print('flash')
     self.lightnings = self.lightnings - 1
     self.pause = math.floor(math.random(10, 50)),
     love.graphics.rectangle( 'fill', 0, 0, 672, 672 )
 end
 
 function lightning:makeFrame()
-  print(self.timer)
   if self.lightnings > 0 then
     if self.pause <= 0 then
       self:flashLightning()

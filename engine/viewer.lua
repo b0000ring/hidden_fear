@@ -4,7 +4,7 @@ local loading = require('engine/screens/loading')
 local dead = require('engine/screens/dead')
 local win = require('engine/screens/win')
 -- maps
-local spritesMap = require('engine/spritesMap')
+local spritesMap = require('engine/maps/spritesMap')
 -- view interface function
 local viewInterface = require('engine/interface')
 -- effects
@@ -20,7 +20,8 @@ local viewer = {
   },
   views = {},
   grassMap = {},
-  sprites = {}
+  sprites = {},
+  audio = {}
 }
 
 function viewer:init(updateCallback)
@@ -31,13 +32,12 @@ function viewer:init(updateCallback)
   love.window.updateMode( 1024, 672, settings )
   love.window.setTitle( 'Hidden Fear' )
 
-  function love.load()
-    for key, val in pairs(spritesMap) do
-      self.sprites[key] = val(self.loadSprite)
-    end
-
-    self:generateGrass()
+  for key, val in pairs(spritesMap) do
+    self.sprites[key] = val(self.loadSprite)
   end
+
+  self:generateGrass()
+  
 
   function love.update()
     updateCallback()

@@ -11,17 +11,27 @@ local ActionsManager = require('classes/ActionsManager')
 -- engine
 local controlManager = require('engine/controlManager')
 local viewer = require('engine/viewer')
+local audioManager = require('engine/audioManager')
 -- functions
 local loadGame = require('functions/loadGame')
 local listenMonstersDead = require('functions/listenMonstersDead')
 local checkOver = require('functions/checkOver')
 local actionsManager = ActionsManager:new()
 
+function startEngine()
+
+end
+
 function startGame()  
   math.randomseed( os.time() )
   collisionManager:setStores(creaturesStore.items, itemsStore.items, objectsStore.items)
-  viewer:init(onUpdate)
+  -- assets loading
+  function love.load()
+    viewer:init(onUpdate)
+    audioManager:init()
+  end
   controlManager:init(onKeyPress)
+  -- map generation
   loadGame(creaturesStore, itemsStore, objectsStore)
   listenMonstersDead(itemsStore)
 end
