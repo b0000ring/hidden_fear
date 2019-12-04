@@ -1,4 +1,4 @@
-local inputActions = require('/engine/controlMap')
+local inputActions = require('/engine/maps/controlMap')
 
 local controlManager = {}
 

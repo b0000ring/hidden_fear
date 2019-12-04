@@ -5,13 +5,14 @@ local dead = require('engine/screens/dead')
 local win = require('engine/screens/win')
 -- maps
 local spritesMap = require('engine/maps/spritesMap')
+local grassMap = require('engine/maps/grassMap')
 -- view interface function
 local viewInterface = require('engine/interface')
 -- effects
 local rain = require('engine/effects/rain')
 local lightning = require('engine/effects/lightning')
 
-local viewer = {
+local viewManager = {
   screens = {
     start = start,
     loading = loading,
@@ -19,45 +20,29 @@ local viewer = {
     win = win
   },
   views = {},
-  grassMap = {},
   sprites = {},
   audio = {}
 }
 
-function viewer:init(updateCallback)
-  local settings = {
-    resizable = false,
-    centered = true,
-  }
-  love.window.updateMode( 1024, 672, settings )
-  love.window.setTitle( 'Hidden Fear' )
-
+function viewManager:load(updateCallback)
   for key, val in pairs(spritesMap) do
     self.sprites[key] = val(self.loadSprite)
   end
-
-  self:generateGrass()
-  
-
-  function love.update()
-    updateCallback()
-  end
-
 end
 
-function viewer.loadSprite(name)
+function viewManager.loadSprite(name)
   return love.graphics.newImage('/assets/graphics/' .. name .. '.png')
 end
 
-function viewer:showScreen(screen)
+function viewManager:showScreen(screen)
   return self.screens[screen].show(stdscr, curses)
 end
 
-function viewer:getSprite(name)
+function viewManager:getSprite(name)
   return self.sprites[name]()
 end
 
-function viewer:clearMap()
+function viewManager:clearMap()
   self.map = {}
   for i = 1, config.mapWidth do
     self.map[i] = {}
@@ -67,33 +52,36 @@ function viewer:clearMap()
   end
 end
 
-function viewer:addToMap(items)
+function viewManager:addToMap(items)
   for key, val in pairs(items) do
     if self.views[val.id] then
       self.map[val.coordX][val.coordY] = self.views[val.id]
     else
-      local sprite = viewer:getSprite(val.name)
+      local sprite = viewManager:getSprite(val.name)
       self.map[val.coordX][val.coordY] = sprite
       self.views[val.id] = sprite
     end
   end
 end
 
-function viewer:generateGrass()
-  for i = 1, config.mapWidth do
-    self.grassMap[i] = {}
-    for j = 1, config.mapHeight do
-      self.grassMap[i][j] = self:getSprite('grass')
-    end
-  end
+function getViewBorders(centralPoint)
+  return {
+    xStart = centralPoint.x - config.mapPadding,
+    xEnd = centralPoint.x + config.mapPadding,
+    yStart = centralPoint.y - config.mapPadding,
+    yEnd = centralPoint.y + config.mapPadding
+  }
 end
 
-function viewer:viewMap(playerCoords)
+function viewManager:drawFrame(playerCoords)
+  -- think about anonimous function
+  local grass = grassMap:getMap(function(type) return self:getSprite(type) end)
+  local viewBorders = getViewBorders(playerCoords)
   local yoffset = 0
-  for i = playerCoords.y - config.mapPadding, playerCoords.y + config.mapPadding do
+  for i = viewBorders.yStart, viewBorders.yEnd do
     local xoffset = 0
-    for j = playerCoords.x - config.mapPadding, playerCoords.x + config.mapPadding do
-      love.graphics.draw( self.grassMap[j][i], xoffset, yoffset)
+    for j = viewBorders.xStart, viewBorders.xEnd do
+      love.graphics.draw(grass[j][i], xoffset, yoffset)
       if self.map[j][i] then
         local drawable = self.map[j][i]
         love.graphics.draw(drawable, xoffset, yoffset - (10 + drawable:getHeight() - 32))
@@ -108,15 +96,15 @@ function viewer:viewMap(playerCoords)
   lightning:makeFrame()
 end
 
-function viewer:view(creatures, objects, items, player)
+function viewManager:view(data)
   self:clearMap()
-  self:addToMap(items)
-  self:addToMap(creatures)
-  self:addToMap(objects)
+  self:addToMap(data.items)
+  self:addToMap(data.creatures)
+  self:addToMap(data.objects)
   function love.draw(drawable)
-    self:viewMap(player:getCoords())
-    viewInterface(self.sprites, player)
+    self:drawFrame(data.player:getCoords())
+    viewInterface(self.sprites, data.player)
   end
 end
 
-return viewer
+return viewManager

@@ -9,9 +9,7 @@ local objectsStore = require('stores/objects')
 -- classes
 local ActionsManager = require('classes/ActionsManager')
 -- engine
-local controlManager = require('engine/controlManager')
-local viewer = require('engine/viewer')
-local audioManager = require('engine/audioManager')
+local engine = require('engine/engine')
 -- functions
 local loadGame = require('functions/loadGame')
 local listenMonstersDead = require('functions/listenMonstersDead')
@@ -25,15 +23,15 @@ end
 function startGame()  
   math.randomseed( os.time() )
   collisionManager:setStores(creaturesStore.items, itemsStore.items, objectsStore.items)
-  -- assets loading
-  function love.load()
-    viewer:init(onUpdate)
-    audioManager:init()
-  end
-  controlManager:init(onKeyPress)
-  -- map generation
+  -- load engine
+  engine:init()
+  engine:load()
+  engine:setInputCallback(onKeyPress)
+  -- generate objects
   loadGame(creaturesStore, itemsStore, objectsStore)
-  listenMonstersDead(itemsStore)
+  -- start game cycle
+  engine:update(passData())
+  -- listenMonstersDead(itemsStore)
 end
 
 function checkItems() 
@@ -42,8 +40,13 @@ function checkItems()
   itemsStore:checkItems()
 end
 
-function onUpdate()
-  viewer:view(creaturesStore.items, objectsStore.items, itemsStore.items, creaturesStore:findPlayer())
+function passData()
+  return {
+    creatures = creaturesStore.items, 
+    objects = objectsStore.items, 
+    items = itemsStore.items, 
+    player = creaturesStore:findPlayer()
+  }
 end
 
 function onKeyPress()
@@ -52,11 +55,11 @@ function onKeyPress()
   actionsManager:executeActions()
   checkItems()
 
-  -- overType = checkOver(viewer)
+  -- overType = checkOver()
 
   -- if overType then
-  --   if overType == 'dead' then viewer:showScreen('dead') end
-  --   if overType == 'win' then viewer:showScreen('win') end
+  --   if overType == 'dead' then viewManager:showScreen('dead') end
+  --   if overType == 'win' then viewManager:showScreen('win') end
   -- end
 end
 
