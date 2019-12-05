@@ -1,9 +1,11 @@
 -- managers
-local audioManager = require('engine/audioManager')
-local controlManager = require('engine/controlManager')
-local viewManager = require('engine/viewManager')
+local audioManager = require('engine/managers/audioManager')
+local controlManager = require('engine/managers/controlManager')
+local viewManager = require('engine/managers/viewManager')
 
-local engine = {}
+local engine = {
+  screen = 'start'
+}
 
 function engine:init()
   local settings = {
@@ -23,13 +25,22 @@ end
 
 function engine:update(data)
   function love.update()
-    viewManager:view(data)
-    audioManager:init()
+    function love.draw(drawable)
+      if self.screen == 'play' then 
+        viewManager:view(data)
+      else
+        viewManager:showScreen(self.screen)
+      end
+    end
   end
 end
 
 function engine:setInputCallback(callback)
   controlManager:init(callback)
+end
+
+function engine:setScreen(screen)
+  self.screen = screen
 end
 
 return engine

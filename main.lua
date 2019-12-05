@@ -16,10 +16,6 @@ local listenMonstersDead = require('functions/listenMonstersDead')
 local checkOver = require('functions/checkOver')
 local actionsManager = ActionsManager:new()
 
-function startEngine()
-
-end
-
 function startGame()  
   math.randomseed( os.time() )
   collisionManager:setStores(creaturesStore.items, itemsStore.items, objectsStore.items)

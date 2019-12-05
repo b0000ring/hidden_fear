@@ -13,6 +13,7 @@ local rain = require('engine/effects/rain')
 local lightning = require('engine/effects/lightning')
 
 local viewManager = {
+  font = nil,
   screens = {
     start = start,
     loading = loading,
@@ -28,6 +29,7 @@ function viewManager:load(updateCallback)
   for key, val in pairs(spritesMap) do
     self.sprites[key] = val(self.loadSprite)
   end
+  self.font = love.graphics.newFont('assets/fonts/manaspc.ttf')
 end
 
 function viewManager.loadSprite(name)
@@ -35,7 +37,7 @@ function viewManager.loadSprite(name)
 end
 
 function viewManager:showScreen(screen)
-  return self.screens[screen].show(stdscr, curses)
+  return self.screens[screen]:show(self.font)
 end
 
 function viewManager:getSprite(name)
@@ -101,10 +103,9 @@ function viewManager:view(data)
   self:addToMap(data.items)
   self:addToMap(data.creatures)
   self:addToMap(data.objects)
-  function love.draw(drawable)
-    self:drawFrame(data.player:getCoords())
-    viewInterface(self.sprites, data.player)
-  end
+
+  self:drawFrame(data.player:getCoords())
+  viewInterface(self.font, self.sprites, data.player)
 end
 
 return viewManager

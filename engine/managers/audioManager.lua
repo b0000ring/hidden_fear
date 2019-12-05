@@ -11,9 +11,7 @@ function audioManager:load()
   for key, val in pairs(audioMap) do
     self.audio[val] = love.audio.newSource('/assets/sounds/' .. val .. '.wav', "static")
   end
-end
 
-function audioManager:init()
   self.audio.rain:setLooping( true )
   love.audio.play(self.audio.rain)
   mediator:subscribe('description.addAction', 'audio', audioManager:play())

@@ -1,8 +1,7 @@
-local DescriptionManager = require('engine/descriptionManager')
+local DescriptionManager = require('engine/managers/descriptionManager')
 local descriptionManager = DescriptionManager:new()
-font = love.graphics.newFont('assets/fonts/manaspc.ttf')
 
-function viewInterface(sprites, player)
+function viewInterface(font, sprites, player)
   local r, g, b, a = love.graphics.getColor( )
   love.graphics.setColor(0, 0, 0)
   love.graphics.rectangle( 'fill', 672, 0, 352, 672 )

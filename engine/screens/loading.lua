@@ -1,15 +1,7 @@
 local loading = {}
 
-function loading.show(stdscr, curses)
-	stdscr:clear()
-	stdscr:addstr("\n\n\n\n\n\n\n\n")
-	stdscr:addstr("   ||    ||||||      ||      ||||    ||  ||    ||  |||||| \n")
-	stdscr:addstr("   ||    ||  ||     ||||     ||  ||      ||||  ||  ||  \n")
-	stdscr:addstr("   ||    ||  ||    ||  ||    ||  ||  ||  || || ||  || ||| \n")
-	stdscr:addstr("   ||    ||  ||   ||||||||   ||  ||  ||  ||  ||||  ||  || \n")
-	stdscr:addstr("   ||||  ||||||  ||      ||  ||||    ||  ||    ||  |||||| \n")
-	stdscr:refresh()
-	curses.napms(2000)
+function loading:show(font)
+	love.graphics.printf('LOADING', font,  450, 300, 352, 'left', 0 , 2)
 end
 
 return loading
