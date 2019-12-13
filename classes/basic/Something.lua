@@ -13,8 +13,6 @@ function Something:new(name, coordX, coordY, health, tags)
 	}
 
 	function newObj:onDead()
-		print('die false!')
-
     return nil
   end
 	

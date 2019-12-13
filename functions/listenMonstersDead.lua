@@ -11,7 +11,6 @@ function listenMonstersDead(itemsStore)
   function listenMainCondition()
     return function(coords)
       totalMonsters = totalMonsters - 1
-      print(totalMonsters)
       if totalMonsters <= 0 then
         createMansionKey(itemsStore, coords.x, coords.y)
       end
