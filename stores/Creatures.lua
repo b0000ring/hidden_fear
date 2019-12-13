@@ -31,11 +31,11 @@ function creaturesStore:makeActions()
 end
 
 function creaturesStore:fill()
-  -- player creating
-  self.items[#self.items + 1] = Player:new(config.startX, config.startY)
   while(#self.items < config.creaturesLimit) do
     self:startCreationCycle(factory, config.creaturesLimit)
   end
+  -- player creating
+  self.items[#self.items + 1] = Player:new(config.startX, config.startY)
 end
 
 return creaturesStore

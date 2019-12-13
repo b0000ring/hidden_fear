@@ -7,6 +7,7 @@ function Regular:new(name, x, y, health, weapon)
   local newObj = Creature:new(name, x, y, health, weapon)
   
   function newObj:onDead()
+    print('die!')
     mediator:call('monster.die', {x = self.coordX, y = self.coordY})
   end
 	

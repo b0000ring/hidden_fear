@@ -5,7 +5,6 @@ local CREATURES_TYPES = require('constants/creatures')
 -- collections
 local weapons = require('collections/weapons')
 
-
 local Monster = {}
 
 function Monster:new(x,y)
