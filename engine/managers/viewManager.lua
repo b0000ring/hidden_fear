@@ -3,6 +3,8 @@ local start = require('engine/screens/start')
 local loading = require('engine/screens/loading')
 local dead = require('engine/screens/dead')
 local win = require('engine/screens/win')
+-- constants
+local screens = require('constants/screens')
 -- maps
 local spritesMap = require('engine/maps/spritesMap')
 local grassMap = require('engine/maps/grassMap')
@@ -15,10 +17,10 @@ local lightning = require('engine/effects/lightning')
 local viewManager = {
   font = nil,
   screens = {
-    start = start,
-    loading = loading,
-    dead = dead,
-    win = win
+    [screens.start] = start,
+    [screens.loading] = loading,
+    [screens.dead] = dead,
+    [screens.win] = win
   },
   views = {},
   sprites = {},

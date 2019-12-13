@@ -10,6 +10,8 @@ local objectsStore = require('stores/objects')
 local ActionsManager = require('classes/ActionsManager')
 -- engine
 local engine = require('engine/engine')
+-- constants
+local screens = require('constants/screens')
 -- functions
 local loadGame = require('functions/loadGame')
 local listenMonstersDead = require('functions/listenMonstersDead')
@@ -22,12 +24,37 @@ function startGame()
   -- load engine
   engine:init()
   engine:load()
-  engine:setInputCallback(onKeyPress)
-  -- generate objects
+  engine:setInputCallback(onKeyPress)  
+  engine:update()
+  engine:setScreen(screens.start)
+  listenMonstersDead(itemsStore)
+end
+
+function handleReturn()
+  if engine.screen == 'start' then 
+    startMainCycle()
+  elseif engine.screen == screens.dead or engine.screen == screens.win then
+    engine:quit()
+  end
+end
+
+function startMainCycle()
+  showLoadingScreen()
   loadGame(creaturesStore, itemsStore, objectsStore)
-  -- start game cycle
   engine:update(passData())
-  -- listenMonstersDead(itemsStore)
+  showMainScreen()
+end
+
+function showLoadingScreen()
+  engine:setScreen(screens.loading)
+end
+
+function showMainScreen()
+  engine:setScreen(screens.main)
+end
+
+function endGame()
+  engine:quit()
 end
 
 function checkItems() 
@@ -46,17 +73,22 @@ function passData()
 end
 
 function onKeyPress()
-  local overType = nil
-  creaturesStore:makeActions()
-  actionsManager:executeActions()
-  checkItems()
+  if engine.screen == screens.main then
+    local overType = nil
+    creaturesStore:makeActions()
+    actionsManager:executeActions()
+    checkItems()
 
-  -- overType = checkOver()
+    overType = checkOver()
 
-  -- if overType then
-  --   if overType == 'dead' then viewManager:showScreen('dead') end
-  --   if overType == 'win' then viewManager:showScreen('win') end
-  -- end
+    if overType then
+      if overType == 'dead' then engine:setScreen(screens.dead) end
+      if overType == 'win' then engine:setScreen(screens.win) end
+    end
+  end
 end
+
+mediator:subscribe('control.return', 'main', handleReturn)
+
 
 startGame()

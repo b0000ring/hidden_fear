@@ -2,9 +2,11 @@
 local audioManager = require('engine/managers/audioManager')
 local controlManager = require('engine/managers/controlManager')
 local viewManager = require('engine/managers/viewManager')
+-- constants
+local screens = require('constants/screens')
 
 local engine = {
-  screen = 'start'
+  screen = nil
 }
 
 function engine:init()
@@ -26,7 +28,7 @@ end
 function engine:update(data)
   function love.update()
     function love.draw(drawable)
-      if self.screen == 'play' then 
+      if self.screen == screens.main then 
         viewManager:view(data)
       else
         viewManager:showScreen(self.screen)
@@ -37,6 +39,10 @@ end
 
 function engine:setInputCallback(callback)
   controlManager:init(callback)
+end
+
+function engine:quit()
+  love.event.quit()
 end
 
 function engine:setScreen(screen)
