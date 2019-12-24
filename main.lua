@@ -27,6 +27,7 @@ function startGame()
   engine:setInputCallback(onKeyPress)  
   engine:update()
   engine:setScreen(screens.start)
+  mediator:call('control.setMode', 'menu')
   listenMonstersDead(itemsStore)
 end
 
@@ -36,6 +37,10 @@ function handleReturn()
   elseif engine.screen == screens.dead or engine.screen == screens.win then
     engine:quit()
   end
+end
+
+function handleEscape()
+  engine:quit()
 end
 
 function startMainCycle()
@@ -50,6 +55,7 @@ function showLoadingScreen()
 end
 
 function showMainScreen()
+  mediator:call('control.setMode', 'main')
   engine:setScreen(screens.main)
 end
 
@@ -82,13 +88,16 @@ function onKeyPress()
     overType = checkOver()
 
     if overType then
+      mediator:call('control.setMode', 'menu')
       if overType == 'dead' then engine:setScreen(screens.dead) end
       if overType == 'win' then engine:setScreen(screens.win) end
     end
   end
 end
 
-mediator:subscribe('control.return', 'main', handleReturn)
+mediator:subscribe('control.menu.return', 'main', handleReturn)
+mediator:subscribe('control.menu.escape', 'main', handleEscape)
+mediator:subscribe('control.main.escape', 'main', handleEscape)
 
 
 startGame()

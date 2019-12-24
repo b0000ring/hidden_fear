@@ -94,14 +94,14 @@ function Player:new(x,y)
     end
   end
 
-  mediator:subscribe('control.drop_weapon', 'player', newObj:dropWeapon())
-  mediator:subscribe('control.wait', 'player', newObj:wait())
-  mediator:subscribe('control.move_up', 'player', newObj:move(DIRECTIONS.y, -1))
-  mediator:subscribe('control.move_down', 'player', newObj:move(DIRECTIONS.y, 1))
-  mediator:subscribe('control.move_left', 'player', newObj:move(DIRECTIONS.x, -1))
-  mediator:subscribe('control.move_right', 'player', newObj:move(DIRECTIONS.x, 1))
-  mediator:subscribe('control.pickup', 'player', newObj:pickup())
-  mediator:subscribe('control.heal', 'player', newObj:heal())
+  mediator:subscribe('control.main.drop_weapon', 'player', newObj:dropWeapon())
+  mediator:subscribe('control.main.wait', 'player', newObj:wait())
+  mediator:subscribe('control.main.move_up', 'player', newObj:move(DIRECTIONS.y, -1))
+  mediator:subscribe('control.main.move_down', 'player', newObj:move(DIRECTIONS.y, 1))
+  mediator:subscribe('control.main.move_left', 'player', newObj:move(DIRECTIONS.x, -1))
+  mediator:subscribe('control.main.move_right', 'player', newObj:move(DIRECTIONS.x, 1))
+  mediator:subscribe('control.main.pickup', 'player', newObj:pickup())
+  mediator:subscribe('control.main.heal', 'player', newObj:heal())
 
 	self.__index = self
   return setmetatable(newObj, self)

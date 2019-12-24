@@ -1,11 +1,24 @@
-local inputActions = {}
-inputActions['up'] = 'move_up'
-inputActions['down'] = 'move_down'
-inputActions['right'] = 'move_right'
-inputActions['left'] = 'move_left'
-inputActions['space'] = 'wait'
-inputActions['return'] = 'return'
-inputActions['z'] = 'pickup'
-inputActions['x'] = 'heal'
-inputActions['c'] = 'drop_weapon'
+local inputActions = {
+    menu = {},
+    main = {},
+    interface = {}
+}
+inputActions['menu']['return'] = 'return'
+inputActions['menu']['escape'] = 'escape'
+
+inputActions['interface']['return'] = 'return'
+inputActions['interface']['escape'] = 'escape'
+
+inputActions['main']['up'] = 'move_up'
+inputActions['main']['h'] = 'show_help'
+inputActions['main']['i'] = 'show_inventory'
+inputActions['main']['escape'] = 'escape'
+inputActions['main']['down'] = 'move_down'
+inputActions['main']['right'] = 'move_right'
+inputActions['main']['left'] = 'move_left'
+inputActions['main']['space'] = 'wait'
+inputActions['main']['z'] = 'pickup'
+inputActions['main']['x'] = 'heal'
+inputActions['main']['c'] = 'drop_weapon'
+
 return inputActions

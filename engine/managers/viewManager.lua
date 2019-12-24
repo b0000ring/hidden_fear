@@ -13,6 +13,9 @@ local viewInterface = require('engine/interface')
 -- effects
 local rain = require('engine/effects/rain')
 local lightning = require('engine/effects/lightning')
+-- windows
+local help = require('engine/windows/help')
+
 
 local viewManager = {
   font = nil,
@@ -21,6 +24,10 @@ local viewManager = {
     [screens.loading] = loading,
     [screens.dead] = dead,
     [screens.win] = win
+  },
+  window = nil,
+  windows = {
+    help = help
   },
   views = {},
   sprites = {},
@@ -32,6 +39,10 @@ function viewManager:load(updateCallback)
     self.sprites[key] = val(self.loadSprite)
   end
   self.font = love.graphics.newFont('assets/fonts/manaspc.ttf')
+
+  mediator:subscribe('control.main.show_help', 'view', self:setWindow('help'))
+  mediator:subscribe('control.interface.escape', 'view', self:closeWindow())
+  mediator:subscribe('control.interface.return', 'view', self:closeWindow())
 end
 
 function viewManager.loadSprite(name)
@@ -68,7 +79,7 @@ function viewManager:addToMap(items)
   end
 end
 
-function getViewBorders(centralPoint)
+function viewManager:getViewBorders(centralPoint)
   return {
     xStart = centralPoint.x - config.mapPadding,
     xEnd = centralPoint.x + config.mapPadding,
@@ -77,10 +88,31 @@ function getViewBorders(centralPoint)
   }
 end
 
+function viewManager:closeWindow()
+  return function()
+    mediator:call('control.setMode', 'main')
+    self.window = nil
+  end
+end
+
+function viewManager:setWindow(window)
+  
+  return function()
+    mediator:call('control.setMode', 'interface')
+    self.window = window
+  end
+end
+
+function viewManager:showWindow()
+  if self.window then
+    self.windows[self.window]:show(self.font)
+  end
+end
+
 function viewManager:drawFrame(playerCoords)
   -- think about anonimous function
   local grass = grassMap:getMap(function(type) return self:getSprite(type) end)
-  local viewBorders = getViewBorders(playerCoords)
+  local viewBorders = viewManager:getViewBorders(playerCoords)
   local yoffset = 0
   for i = viewBorders.yStart, viewBorders.yEnd do
     local xoffset = 0
@@ -98,6 +130,7 @@ function viewManager:drawFrame(playerCoords)
   rain:makeFrame()
   love.graphics.draw(self:getSprite('night_effect'), 0, 0)
   lightning:makeFrame()
+  self:showWindow()
 end
 
 function viewManager:view(data)
