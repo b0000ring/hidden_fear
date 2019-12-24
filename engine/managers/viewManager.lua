@@ -15,6 +15,7 @@ local rain = require('engine/effects/rain')
 local lightning = require('engine/effects/lightning')
 -- windows
 local help = require('engine/windows/help')
+local inventory = require('engine/windows/inventory')
 
 
 local viewManager = {
@@ -27,7 +28,8 @@ local viewManager = {
   },
   window = nil,
   windows = {
-    help = help
+    help = help,
+    inventory = inventory, 
   },
   views = {},
   sprites = {},
@@ -41,6 +43,8 @@ function viewManager:load(updateCallback)
   self.font = love.graphics.newFont('assets/fonts/manaspc.ttf')
 
   mediator:subscribe('control.main.show_help', 'view', self:setWindow('help'))
+  mediator:subscribe('control.main.show_inventory', 'view', self:setWindow('inventory'))
+
   mediator:subscribe('control.interface.escape', 'view', self:closeWindow())
   mediator:subscribe('control.interface.return', 'view', self:closeWindow())
 end
@@ -103,9 +107,10 @@ function viewManager:setWindow(window)
   end
 end
 
-function viewManager:showWindow()
+-- this way of player sharing is not good
+function viewManager:showWindow(player)
   if self.window then
-    self.windows[self.window]:show(self.font)
+    self.windows[self.window]:show(self.font, player)
   end
 end
 
@@ -130,7 +135,6 @@ function viewManager:drawFrame(playerCoords)
   rain:makeFrame()
   love.graphics.draw(self:getSprite('night_effect'), 0, 0)
   lightning:makeFrame()
-  self:showWindow()
 end
 
 function viewManager:view(data)
@@ -141,6 +145,7 @@ function viewManager:view(data)
 
   self:drawFrame(data.player:getCoords())
   viewInterface(self.font, self.sprites, data.player)
+  self:showWindow(data.player)
 end
 
 return viewManager
