@@ -50,6 +50,8 @@ function descriptionManager:new()
         text = action.actorName .. ' drop his weapon '
       elseif type == DESCRIPTION_TYPES.cant_open then
         text = action.actorName .. ' failed to open ' .. action.targetName
+      elseif type == DESCRIPTION_TYPES.hit then
+        text = action.actorName .. ' hit ' .. action.targetName
       end
 
       table.insert(self.actions, text)

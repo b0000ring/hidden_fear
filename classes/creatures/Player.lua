@@ -22,8 +22,8 @@ function Player:new(x,y)
   local newObj = Creature:new(CREATURES_TYPES.player, x, y, 30, weapons.fists)
 
   newObj.heals = 0
-  -- newObj.keys = { 'barn', 'mansion' }
-  newObj.items = { { name = 'axe' }, { name = 'test_item1' } }
+  newObj.keys = {}
+  newObj.items = {}
   newObj.bullets = {
     pistol = 0,
     shotgun = 0,

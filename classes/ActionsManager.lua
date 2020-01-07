@@ -36,6 +36,8 @@ function ActionsManager:new()
     elseif collision.tags[TAGS.openable] then
       self:openFlow(action.initiator, collision)
       return true
+    elseif collision.tags[TAGS.effect] then
+      self:effectFlow(action.initiator, collision)
     elseif collision.tags[TAGS.hiding] then
       self:hideFlow(action.initiator, collision)
     elseif collision.tags[TAGS.blocking] then
@@ -43,6 +45,11 @@ function ActionsManager:new()
     elseif collision.tags[TAGS.pickupable] then
       self:setPlayerActionDescription(action.initiator.name, DESCRIPTIONS.over, collision.name)
     end
+  end
+
+  function newObj:effectFlow(initiator, collision)
+    collision:action(initiator)
+    self:setPlayerActionDescription(initiator.name, DESCRIPTIONS.hit, collision.name)
   end
 
   function newObj:openFlow(initiator, collision)

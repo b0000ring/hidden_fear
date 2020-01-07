@@ -32,6 +32,7 @@ local spritesMap = {
   [OBJECTS_TYPES.vertical_wall] = load({'vertical_wall'}),
   [OBJECTS_TYPES.nothing] = load({'nothing'}),
   [OBJECTS_TYPES.door] = load({'door'}),
+  [OBJECTS_TYPES.trap] = load({'trap'}),
   [OBJECTS_TYPES.grass] = load({'grass1', 'grass2'}),
   -- items
   [ITEMS_TYPES.shotgun] = load({'shotgun'}),

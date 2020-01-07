@@ -6,7 +6,8 @@ local TAGS = {
   openable = 'openable',
   pickupable = 'pickupable',
   hiding = 'hiding',
-  player = 'player'
+  player = 'player',
+  effect = 'effect'
 }
 
 return TAGS

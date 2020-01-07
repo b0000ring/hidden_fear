@@ -18,6 +18,8 @@ end
 function drawBarn(objectsStore)
   local x = math.random(config.mapPadding + 1, config.mapWidth - config.mapPadding - 20)
   local y = math.random(config.mapPadding + 1, config.mapHeight - config.mapPadding - 20)
+  -- sometimes objectsStore is null!
+  -- need to check it
   local result = objectsStore:drawHouse(x, y, math.random(4, 6), math.random(4, 6), KEYS.barn)
   if not result then
     return drawBarn()

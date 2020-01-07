@@ -12,7 +12,7 @@ local DESCRIPTIONS = {
   pickup = 'pickup',
   fail_pickup = 'fail_pickup',
   move = 'move',
-
+  hit = 'hit',
 }
 
 return DESCRIPTIONS
