@@ -8,6 +8,7 @@ local screens = require('constants/screens')
 -- maps
 local spritesMap = require('engine/maps/spritesMap')
 local grassMap = require('engine/maps/grassMap')
+local fogMap = require('engine/maps/fogMap')
 -- view interface function
 local viewInterface = require('engine/interface')
 -- effects
@@ -117,15 +118,22 @@ end
 function viewManager:drawFrame(playerCoords)
   -- think about anonimous function
   local grass = grassMap:getMap(function(type) return self:getSprite(type) end)
+  local fog = fogMap:getMap(playerCoords.x, playerCoords.y)
   local viewBorders = viewManager:getViewBorders(playerCoords)
   local yoffset = 0
   for i = viewBorders.yStart, viewBorders.yEnd do
     local xoffset = 0
     for j = viewBorders.xStart, viewBorders.xEnd do
       love.graphics.draw(grass[j][i], xoffset, yoffset)
-      if self.map[j][i] then
+      if self.map[j][i] and not fog[j][i] then
         local drawable = self.map[j][i]
         love.graphics.draw(drawable, xoffset, yoffset - (10 + drawable:getHeight() - 32))
+      end
+      if fog[j][i] then
+        local r, g, b, a = love.graphics.getColor( )
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.rectangle( 'fill', xoffset, yoffset, 32, 32 )
+        love.graphics.setColor(r, g, b, a)
       end
       xoffset = xoffset + 32
     end
