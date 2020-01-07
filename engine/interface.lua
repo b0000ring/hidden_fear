@@ -1,6 +1,15 @@
 local DescriptionManager = require('engine/managers/descriptionManager')
 local descriptionManager = DescriptionManager:new()
 
+local totalMonsters = config.creaturesLimit
+
+function reduceMonsers()
+  print(totalMonsters)
+  totalMonsters = totalMonsters - 1
+end
+
+mediator:subscribe('monster.die', 'view', reduceMonsers)
+
 function viewInterface(font, sprites, player)
   local r, g, b, a = love.graphics.getColor( )
   love.graphics.setColor(0, 0, 0)
@@ -16,10 +25,11 @@ function viewInterface(font, sprites, player)
   love.graphics.printf('Shotgun bullets: ' .. player.bullets.shotgun, font,  680, 250, 352, 'left', 0 , 1.5)
   love.graphics.printf('_________________________________________', font,  680, 280, 352, 'left', 0 , 1.5)
   love.graphics.printf('X: ' .. player.coordX .. ' | Y ' .. player.coordY, font,  680, 320, 352, 'left', 0 , 1.5)
-  love.graphics.printf('_________________________________________', font,  680, 350, 352, 'left', 0 , 1.5)
+  love.graphics.printf('Monsters left: ' .. totalMonsters, font,  680, 350, 352, 'left', 0 , 1.5)
+  love.graphics.printf('_________________________________________', font,  680, 380, 352, 'left', 0 , 1.5)
   
   local actionDescriptions = descriptionManager:getActions()
-  local basicHeight = 390
+  local basicHeight = 420
   for key, val in pairs(actionDescriptions) do
     love.graphics.printf(val, font,  680, basicHeight, 300, 'left', 0 , 1.2)
     basicHeight = basicHeight + 40
