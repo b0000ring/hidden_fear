@@ -22,7 +22,7 @@ local itemsFillList = {
 function itemsStore:createAxe()
   local x = math.random(config.mapPadding + 1, config.mapWidth - config.mapPadding - 1)
   local y = math.random(config.mapPadding + 1, config.mapHeight - config.mapPadding - 1)
-  self.items[#self.items + 1] = Axe:new(51, 51)
+  self.items[#self.items + 1] = Axe:new(x, y)
 end
 
 function itemsStore:fill()
