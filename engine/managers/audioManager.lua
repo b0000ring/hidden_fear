@@ -32,7 +32,7 @@ function audioManager:play(key)
         love.audio.play(self.audio.magic)
       elseif action.instrumentName == 'teeths' then
         love.audio.play(self.audio.teeths)
-      elseif action.instrumentName == 'fists' then
+      elseif action.instrumentName == 'fists' or action.instrumentName == 'bat with nails' then
         love.audio.play(self.audio.fists)
       elseif action.instrumentName == 'shotgun' then
         love.audio.play(self.audio.shotgun)

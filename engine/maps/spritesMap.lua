@@ -24,6 +24,7 @@ local spritesMap = {
   [CREATURES_TYPES.monster] = load({'monster'}),
   [CREATURES_TYPES.zombie] = load({'zombie'}),
   [CREATURES_TYPES.boss] = load({'boss'}),
+  [CREATURES_TYPES.imp] = load({'imp'}),
   -- objects
   [OBJECTS_TYPES.bush] = load({'bush'}),
   [OBJECTS_TYPES.tree] = load({'tree1', 'tree2'}),
@@ -42,9 +43,6 @@ local spritesMap = {
   [ITEMS_TYPES.key] = load({'key'}),
   -- effects
   night_effect = load({'night_effect'}),
-  -- interface
-  interface_bg = load({'interface_bg'}),
-
 }
 
 
