@@ -52,6 +52,8 @@ function descriptionManager:new()
         text = action.actorName .. ' failed to open ' .. action.targetName
       elseif type == DESCRIPTION_TYPES.hit then
         text = action.actorName .. ' hit ' .. action.targetName
+      elseif type == DESCRIPTION_TYPES.cut then
+        text = action.actorName .. ' cut ' .. action.targetName
       end
 
       table.insert(self.actions, text)

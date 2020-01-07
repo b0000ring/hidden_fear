@@ -38,12 +38,27 @@ function ActionsManager:new()
       return true
     elseif collision.tags[TAGS.effect] then
       self:effectFlow(action.initiator, collision)
+    elseif collision.tags[TAGS.cutable] then
+      self:cutableFlow(action.initiator, collision)
+      return true
     elseif collision.tags[TAGS.hiding] then
       self:hideFlow(action.initiator, collision)
     elseif collision.tags[TAGS.blocking] then
       return true
     elseif collision.tags[TAGS.pickupable] then
       self:setPlayerActionDescription(action.initiator.name, DESCRIPTIONS.over, collision.name)
+    end
+  end
+
+  function newObj:cutableFlow(initiator, collision)
+    local items = initiator.items
+    if items then 
+      for key, val in pairs(items) do
+        if val == 'axe' then
+          collision.health = collision.health - 1
+          self:setPlayerActionDescription(initiator.name, DESCRIPTIONS.cut, collision.name)
+        end
+      end
     end
   end
 

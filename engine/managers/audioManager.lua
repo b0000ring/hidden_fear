@@ -65,6 +65,8 @@ function audioManager:play(key)
       love.audio.play(self.audio.drop)
     elseif type == DESCRIPTION_TYPES.cant_open then
       love.audio.play(self.audio.impossible)
+    elseif type == DESCRIPTION_TYPES.cut then
+      love.audio.play(self.audio.cut)
     elseif type == 'thunder' then
       love.audio.play(self.audio.thunder)
     end

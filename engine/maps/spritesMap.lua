@@ -43,6 +43,7 @@ local spritesMap = {
   [ITEMS_TYPES.pistol_bullets] = load({'pistol_bullets'}),
   [ITEMS_TYPES.key] = load({'key'}),
   [ITEMS_TYPES.laser] = load({'laser'}),
+  [ITEMS_TYPES.axe] = load({'axe'}),
 
   -- effects
   night_effect = load({'night_effect'}),
