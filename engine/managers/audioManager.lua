@@ -38,10 +38,15 @@ function audioManager:play(key)
         love.audio.play(self.audio.shotgun)
       elseif action.instrumentName == 'pistol' then
         love.audio.play(self.audio.pistol)
+      elseif action.instrumentName == 'laser' then
+        love.audio.play(self.audio.laser)
       end
     elseif type == DESCRIPTION_TYPES.wait then 
       love.audio.play(self.audio.wait)
-    -- add trap event somewhere
+    elseif type == DESCRIPTION_TYPES.hit then
+      if action.targetName == 'trap' then
+        love.audio.play(self.audio.trap)
+      end
     elseif type == DESCRIPTION_TYPES.hiding then
       love.audio.play(self.audio.hiding)
     elseif type == DESCRIPTION_TYPES.pickup then

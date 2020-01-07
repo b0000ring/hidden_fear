@@ -11,6 +11,7 @@ local weapons = {
   pistol = Weapon:new(WEAPONS_TYPES.pistol, 3, 'pistol'),
   shotgun = Weapon:new(WEAPONS_TYPES.shotgun, 4, 'shotgun'),
   batWithNails = Weapon:new(WEAPONS_TYPES.batWithNails, 3),
+  laser = Weapon:new(WEAPONS_TYPES.laser, 4),
 }
 
 return weapons

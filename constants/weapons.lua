@@ -5,7 +5,8 @@ local WEAPONS = {
   teeths = 'teeths',
   pistol = 'pistol',
   shotgun = 'shotgun',
-  batWithNails = 'bat with nails'
+  batWithNails = 'bat with nails',
+  laser = 'laser'
 }
 
 return WEAPONS

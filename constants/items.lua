@@ -6,6 +6,7 @@ local ITEMS = {
   shotgun = 'shotgun',
   pistol_bullets = 'pistol bullets',
   shotgun_bullets = 'shotgun bullets',
+  laser = 'laser'
 }
 
 return ITEMS

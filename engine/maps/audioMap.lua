@@ -20,7 +20,8 @@ local audioMap = {
   'shotgun',
   'step',
   'thunder',
-  'win'
+  'win',
+  'laser'
 }
 
 return audioMap

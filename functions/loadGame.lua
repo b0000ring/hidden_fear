@@ -2,6 +2,8 @@
 local Boss = require('classes/creatures/Boss')
 local Shotgun = require('classes/items/Shotgun')
 local Key = require('classes/items/Key')
+local Bush = require('classes/objects/Bush')
+local Laser = require('classes/items/laser')
 -- constants
 local KEYS = require('constants/keys')
 local OBJECTS_TYPES = require('constants/objects') 
@@ -40,12 +42,21 @@ function createBoss(creaturesStore, x, y)
   creaturesStore.items[#creaturesStore.items + 1] = Boss:new(x, y)
 end
 
+function placeSecretLaser(itemsStore, objectsStore)
+  local x = math.random(config.mapPadding + 1, config.mapWidth - config.mapPadding - 1)
+  local y = math.random(config.mapPadding + 1, config.mapHeight - config.mapPadding - 1)
+  objectsStore.items[#itemsStore.items + 1] = Bush:new(x, y)
+  itemsStore.items[#itemsStore.items + 1] = Laser:new(x, y)
+end
+
 function loadGame(creaturesStore, itemsStore, objectsStore)
 
   drawMansion(objectsStore)
   drawBarn(objectsStore)
 
   createBarnKey(itemsStore)
+
+  placeSecretLaser(itemsStore, objectsStore)
 
   objectsStore:fill()
   creaturesStore:fill()
