@@ -16,6 +16,16 @@ function creaturesStore:findPlayer()
   end
 end
 
+function creaturesStore:createPlayer()
+  local x = math.random(config.mapPadding + 1, config.mapWidth - config.mapPadding - 1)
+  local y = math.random(config.mapPadding + 1, config.mapHeight - config.mapPadding - 1)
+  if not collisionManager:findCollision(x, y) then
+    self.items[#self.items + 1] = Player:new(x, y)
+    return
+  end
+  self:createPlayer()
+end
+
 function creaturesStore:makeActions()
   local player = self:findPlayer()
   local playerCoords = {x = 0, y = 0}
@@ -35,7 +45,7 @@ function creaturesStore:fill()
     self:startCreationCycle(factory, config.creaturesLimit)
   end
   -- player creating
-  self.items[#self.items + 1] = Player:new(config.startX, config.startY)
+  self:createPlayer()
 end
 
 return creaturesStore
