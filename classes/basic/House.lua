@@ -33,19 +33,19 @@ function House:new(x, y, width, height, keyId)
   for i = currentX, currentX + width do
     drawHorizontalWall(i, y + height)
   end
-  for i = currentY + 1, currentY + height - 1 do
+  for i = currentY, currentY + height - 1 do
     if i ~= y + math.floor(height / 2) then
       drawVerticalWall(x, i)
     else
       drawDoor(x, i, keyId)
     end
   end
-  for i = currentY + 1, currentY + height - 1 do
+  for i = currentY, currentY + height - 1 do
     drawVerticalWall(x + width, i)
   end
   -- fill by nothing to prevent generating inside of house
-  for i = x + 1, x + width - 1 do
-    for j = y + 1, y + height - 1 do
+  for i = x, x + width - 1 do
+    for j = y, y + height - 1 do
       mediator:call('store.objects.addSpecial', Nothing:new(i, j))
       mediator:call('store.containers.addSpecial', Container:new('floor', i, j, false))
     end
