@@ -72,8 +72,9 @@ function Creature:new(name, coordX, coordY, health, weapon)
             x = self.coordX + (newValue or value)
           }
         end
-
-        mediator:call('actions.addAction', Action:new(ACTION_TYPES.move, self, newCoords))
+        if newCoords.x > 0 and newCoords.y > 0 and newCoords.x < config.mapWidth and newCoords.y < config.mapHeight then 
+          mediator:call('actions.addAction', Action:new(ACTION_TYPES.move, self, newCoords))
+        end
       end
     end
   end

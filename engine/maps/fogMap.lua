@@ -21,7 +21,9 @@ function fogMap:removeFog(x,y)
   local offset = 3
   for i = x - offset, x + offset do
     for j = y - offset, y + offset do
-      self.items[i][j] = false
+      if i > 0 and j > 0 and i < config.mapWidth and j < config.mapHeight then
+        self.items[i][j] = false
+      end
     end
   end
 end

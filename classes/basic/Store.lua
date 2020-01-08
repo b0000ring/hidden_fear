@@ -24,8 +24,8 @@ function Store:new(name)
   end
 	
   function newObj:startCreationCycle(factory, limit)
-    for i = config.mapPadding, config.mapWidth - config.mapPadding do
-      for j = config.mapPadding, config.mapHeight - config.mapPadding do
+    for i = 2, config.mapWidth - 2 do
+      for j = 2, config.mapHeight - 2 do
         if #self.items < limit then
           if math.floor(math.random(0,1000)) == 1 and not collisionManager:findCollision(i,j) then
             self.items[#self.items + 1] = factory(i,j)

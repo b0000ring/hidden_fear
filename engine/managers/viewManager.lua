@@ -120,39 +120,40 @@ function viewManager:drawFrame(playerCoords)
   local fog = fogMap:getMap(playerCoords.x, playerCoords.y)
   local viewBorders = viewManager:getViewBorders(playerCoords)
   local yoffset = 0
+  
   for i = viewBorders.yStart, viewBorders.yEnd do
     local xoffset = 0
     for j = viewBorders.xStart, viewBorders.xEnd do
-      love.graphics.draw(grass[j][i], xoffset, yoffset)
-      -- draw lover effects
-      if self.effects[j][i] and not fog[j][i] then
-        local drawable = self.effects[j][i]
-        if not drawable.data.overlapping then
-          print(2222)
-          love.graphics.draw(drawable.sprite, xoffset, yoffset)
+      if i > 0 and j > 0 and j < config.mapWidth and i < config.mapHeight then
+        love.graphics.draw(grass[j][i], xoffset, yoffset)
+        -- draw lover effects
+        if self.effects[j][i] and not fog[j][i] then
+          local drawable = self.effects[j][i]
+          if not drawable.data.overlapping then
+            love.graphics.draw(drawable.sprite, xoffset, yoffset)
+          end
+        end
+        -- draw content
+        if self.map[j][i] and not fog[j][i] then
+          local drawable = self.map[j][i]
+          love.graphics.draw(drawable.sprite, xoffset, yoffset - (drawable.sprite:getHeight() - 32))
+        end
+        -- draw upper effects
+        if self.effects[j][i] and not fog[j][i] then
+          local drawable = self.effects[j][i]
+          if drawable.data.overlapping then
+            love.graphics.draw(drawable.sprite, xoffset, yoffset)
+          end
+        end
+        -- @TODO refactoring this
+        if fog[j][i] then
+          local r, g, b, a = love.graphics.getColor( )
+          love.graphics.setColor(0, 0, 0)
+          love.graphics.rectangle( 'fill', xoffset, yoffset, 32, 32 )
+          love.graphics.setColor(r, g, b, a)
         end
       end
-      -- draw content
-      if self.map[j][i] and not fog[j][i] then
-        local drawable = self.map[j][i]
-        love.graphics.draw(drawable.sprite, xoffset, yoffset - (10 + drawable.sprite:getHeight() - 32))
-      end
-      -- draw upper effects
-      if self.effects[j][i] and not fog[j][i] then
-        local drawable = self.effects[j][i]
-        if drawable.data.overlapping then
-          print(1111)
-          love.graphics.draw(drawable.sprite, xoffset, yoffset)
-        end
-      end
-      -- @TODO refactoring this
-      if fog[j][i] then
-        local r, g, b, a = love.graphics.getColor( )
-        love.graphics.setColor(0, 0, 0)
-        love.graphics.rectangle( 'fill', xoffset, yoffset, 32, 32 )
-        love.graphics.setColor(r, g, b, a)
-      end
-      xoffset = xoffset + 32
+        xoffset = xoffset + 32
     end
     xoffset = 0
     yoffset = yoffset + 32

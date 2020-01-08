@@ -6,7 +6,7 @@ local OBJECTS = {
   tree = 'tree',
   vertical_wall = 'vertical_wall',
   grass = 'grass',
-  trap = 'trap'
+  trap = 'trap',
 }
 
 return OBJECTS
