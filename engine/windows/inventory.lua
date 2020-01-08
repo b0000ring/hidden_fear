@@ -19,7 +19,7 @@ function inventory:show(font, player)
   stringY = stringY + 40
 
   for key, val in pairs(player.items) do
-    love.graphics.printf('- ' .. val.name, font, 200, stringY, 352, 'left', 0 , 1.5)
+    love.graphics.printf('- ' .. val, font, 200, stringY, 352, 'left', 0 , 1.5)
     stringY = stringY + 40
   end
 end

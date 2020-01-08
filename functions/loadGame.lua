@@ -49,7 +49,7 @@ function placeSecretLaser(itemsStore, objectsStore)
   itemsStore.items[#itemsStore.items + 1] = Laser:new(x, y)
 end
 
-function loadGame(creaturesStore, itemsStore, objectsStore)
+function loadGame(creaturesStore, itemsStore, objectsStore, containersStore)
 
   drawMansion(objectsStore)
   drawBarn(objectsStore)
@@ -61,6 +61,7 @@ function loadGame(creaturesStore, itemsStore, objectsStore)
   objectsStore:fill()
   creaturesStore:fill()
   itemsStore:fill()
+  containersStore:fill()
   objectsStore:removeNothing()
 
   local mansionCoords = nil

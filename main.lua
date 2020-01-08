@@ -6,6 +6,7 @@ collisionManager = require('collisionManager')
 local creaturesStore = require('stores/creatures')
 local itemsStore = require('stores/items')
 local objectsStore = require('stores/objects')
+local containersStore = require('stores/containers')
 -- classes
 local ActionsManager = require('classes/ActionsManager')
 -- engine
@@ -45,7 +46,7 @@ end
 
 function startMainCycle()
   showLoadingScreen()
-  loadGame(creaturesStore, itemsStore, objectsStore)
+  loadGame(creaturesStore, itemsStore, objectsStore, containersStore)
   engine:update(passData())
   showMainScreen()
 end
@@ -74,6 +75,7 @@ function passData()
     creatures = creaturesStore.items, 
     objects = objectsStore.items, 
     items = itemsStore.items, 
+    containers = containersStore.items,
     player = creaturesStore:findPlayer()
   }
 end

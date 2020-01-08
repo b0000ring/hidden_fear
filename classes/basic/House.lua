@@ -4,6 +4,7 @@ local HorizontalWall = require('classes/objects/HorizontalWall')
 local VerticalWall = require('classes/objects/VerticalWall')
 local Door = require('classes/objects/Door')
 local Nothing = require('classes/basic/Nothing')
+local Container = require('classes/basic/Container')
 
 local House = {}
 
@@ -46,6 +47,7 @@ function House:new(x, y, width, height, keyId)
   for i = x + 1, x + width - 1 do
     for j = y + 1, y + height - 1 do
       mediator:call('store.objects.addSpecial', Nothing:new(i, j))
+      mediator:call('store.containers.addSpecial', Container:new('floor', i, j, false))
     end
   end
 

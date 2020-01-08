@@ -34,7 +34,9 @@ local viewManager = {
   },
   views = {},
   sprites = {},
-  audio = {}
+  audio = {},
+  map = {},
+  effects = {}
 }
 
 function viewManager:load(updateCallback)
@@ -45,7 +47,6 @@ function viewManager:load(updateCallback)
 
   mediator:subscribe('control.main.show_help', 'view', self:setWindow('help'))
   mediator:subscribe('control.main.show_inventory', 'view', self:setWindow('inventory'))
-
   mediator:subscribe('control.interface.escape', 'view', self:closeWindow())
   mediator:subscribe('control.interface.return', 'view', self:closeWindow())
 end
@@ -62,24 +63,23 @@ function viewManager:getSprite(name)
   return self.sprites[name]()
 end
 
-function viewManager:clearMap()
-  self.map = {}
+function viewManager:clearMap(map)
   for i = 1, config.mapWidth do
-    self.map[i] = {}
+    map[i] = {}
     for j = 1, config.mapHeight do
-      self.map[i][j] = nil
+      map[i][j] = nil
     end
   end
 end
 
-function viewManager:addToMap(items)
+function viewManager:addToMap(items, map)
   for key, val in pairs(items) do
     if self.views[val.id] then
-      self.map[val.coordX][val.coordY] = self.views[val.id]
+      map[val.coordX][val.coordY] = self.views[val.id]
     else
       local sprite = viewManager:getSprite(val.name)
-      self.map[val.coordX][val.coordY] = sprite
-      self.views[val.id] = sprite
+      map[val.coordX][val.coordY] = {sprite = sprite, data = val}
+      self.views[val.id] = {sprite = sprite, data = val}
     end
   end
 end
@@ -114,9 +114,8 @@ function viewManager:showWindow(player)
     self.windows[self.window]:show(self.font, player)
   end
 end
-
+-- @TODO refactoring
 function viewManager:drawFrame(playerCoords)
-  -- think about anonimous function
   local grass = grassMap:getMap(function(type) return self:getSprite(type) end)
   local fog = fogMap:getMap(playerCoords.x, playerCoords.y)
   local viewBorders = viewManager:getViewBorders(playerCoords)
@@ -125,10 +124,28 @@ function viewManager:drawFrame(playerCoords)
     local xoffset = 0
     for j = viewBorders.xStart, viewBorders.xEnd do
       love.graphics.draw(grass[j][i], xoffset, yoffset)
+      -- draw lover effects
+      if self.effects[j][i] and not fog[j][i] then
+        local drawable = self.effects[j][i]
+        if not drawable.data.overlapping then
+          print(2222)
+          love.graphics.draw(drawable.sprite, xoffset, yoffset)
+        end
+      end
+      -- draw content
       if self.map[j][i] and not fog[j][i] then
         local drawable = self.map[j][i]
-        love.graphics.draw(drawable, xoffset, yoffset - (10 + drawable:getHeight() - 32))
+        love.graphics.draw(drawable.sprite, xoffset, yoffset - (10 + drawable.sprite:getHeight() - 32))
       end
+      -- draw upper effects
+      if self.effects[j][i] and not fog[j][i] then
+        local drawable = self.effects[j][i]
+        if drawable.data.overlapping then
+          print(1111)
+          love.graphics.draw(drawable.sprite, xoffset, yoffset)
+        end
+      end
+      -- @TODO refactoring this
       if fog[j][i] then
         local r, g, b, a = love.graphics.getColor( )
         love.graphics.setColor(0, 0, 0)
@@ -146,10 +163,12 @@ function viewManager:drawFrame(playerCoords)
 end
 
 function viewManager:view(data)
-  self:clearMap()
-  self:addToMap(data.items)
-  self:addToMap(data.creatures)
-  self:addToMap(data.objects)
+  self:clearMap(self.map)
+  self:clearMap(self.effects)
+  self:addToMap(data.items, self.map)
+  self:addToMap(data.creatures, self.map)
+  self:addToMap(data.objects, self.map)
+  self:addToMap(data.containers, self.effects)
 
   self:drawFrame(data.player:getCoords())
   viewInterface(self.font, self.sprites, data.player)

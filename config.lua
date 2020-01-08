@@ -11,7 +11,8 @@ config = {
   objectsLimit = 1500,
   startX = 50,
   startY = 50,
-  mapPadding = 10
+  mapPadding = 10,
+  effectsLimit = 1000,
 }
 
 return config
