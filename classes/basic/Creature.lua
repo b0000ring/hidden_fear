@@ -112,9 +112,14 @@ function Creature:new(name, coordX, coordY, health, weapon)
         end
       end
 
-      if step.value and not collisionManager:findCollision(self.coordX + step.value, self.coordY ) then
-        return step
+      if step.value then 
+        local collision = collisionManager:findCollision(self.coordX + step.value, self.coordY )
+
+        if step.value and (not collision or collision.name == 'player') then
+          return step
+        end
       end
+     
     end
 
     -- decide where to go by y

@@ -18,7 +18,6 @@ function Store:new(name)
 
   function newObj:addSpecial()
     return function(item)
-      print(item.name)
       self.items[#self.items + 1] = item
     end
   end

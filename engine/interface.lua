@@ -4,7 +4,6 @@ local descriptionManager = DescriptionManager:new()
 local totalMonsters = config.creaturesLimit
 
 function reduceMonsers()
-  print(totalMonsters)
   totalMonsters = totalMonsters - 1
 end
 
