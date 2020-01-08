@@ -2,7 +2,6 @@
 local Bush = require('classes/objects/Bush')
 local Tree = require('classes/objects/Tree')
 local Trap = require('classes/objects/Trap')
-local Darkness = require('classes/objects/Darkness')
 
 -- constants
 local OBJECTS_TYPES = require('constants/objects')
