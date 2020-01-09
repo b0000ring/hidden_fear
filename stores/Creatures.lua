@@ -20,7 +20,7 @@ function creaturesStore:createPlayer()
   local x = math.random(config.mapPadding + 1, config.mapWidth - 1)
   local y = math.random(config.mapPadding + 1, config.mapHeight - 1)
   if not collisionManager:findCollision(x, y) then
-    self.items[#self.items + 1] = Player:new(50, 50)
+    self.items[#self.items + 1] = Player:new(x, y)
     return
   end
   self:createPlayer()
