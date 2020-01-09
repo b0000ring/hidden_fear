@@ -71,6 +71,11 @@ function Creature:new(name, coordX, coordY, health, weapon)
             y = self.coordY,
             x = self.coordX + (newValue or value)
           }
+          if newValue == 1 or value == 1 then
+            mediator:call('view.direction.change', {id = self.id, direction = 'right'})
+          else
+            mediator:call('view.direction.change', {id = self.id, direction = 'left'})
+          end
         end
         if newCoords.x > 0 and newCoords.y > 0 and newCoords.x < config.mapWidth and newCoords.y < config.mapHeight then 
           mediator:call('actions.addAction', Action:new(ACTION_TYPES.move, self, newCoords))

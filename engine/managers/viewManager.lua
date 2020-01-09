@@ -36,7 +36,8 @@ local viewManager = {
   sprites = {},
   audio = {},
   map = {},
-  effects = {}
+  effects = {},
+  directions = {}
 }
 
 function viewManager:load(updateCallback)
@@ -49,6 +50,14 @@ function viewManager:load(updateCallback)
   mediator:subscribe('control.main.show_inventory', 'view', self:setWindow('inventory'))
   mediator:subscribe('control.interface.escape', 'view', self:closeWindow())
   mediator:subscribe('control.interface.return', 'view', self:closeWindow())
+  mediator:subscribe('view.direction.change', 'view', self:changeDirection())
+
+end
+
+function viewManager:changeDirection()
+  return function(data)
+    self.directions[data.id] = data.direction
+  end
 end
 
 function viewManager.loadSprite(name)
@@ -136,7 +145,13 @@ function viewManager:drawFrame(playerCoords)
         -- draw content
         if self.map[j][i] and not fog[j][i] then
           local drawable = self.map[j][i]
-          love.graphics.draw(drawable.sprite, xoffset, yoffset - (drawable.sprite:getHeight() - 32))
+          local scale = 1
+          local offsetx = 0
+          if self.directions[drawable.data.id] == 'left'then 
+            scale = -1
+            offsetx = drawable.sprite:getWidth()
+          end
+          love.graphics.draw(drawable.sprite, xoffset, yoffset - (drawable.sprite:getHeight() - 32), 0, scale, 1, offsetx)
         end
         -- draw upper effects
         if self.effects[j][i] and not fog[j][i] then
