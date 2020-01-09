@@ -3,7 +3,7 @@ local Boss = require('classes/creatures/Boss')
 local Shotgun = require('classes/items/Shotgun')
 local Key = require('classes/items/Key')
 local Bush = require('classes/objects/Bush')
-local Laser = require('classes/items/laser')
+local Laser = require('classes/items/Laser')
 -- constants
 local KEYS = require('constants/keys')
 local OBJECTS_TYPES = require('constants/objects') 
