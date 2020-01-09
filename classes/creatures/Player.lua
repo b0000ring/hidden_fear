@@ -84,7 +84,7 @@ function Player:new(x,y)
   function newObj:heal()
     return function()
       if self.heals > 0 and self.health < self.maxHealth then
-        self.health = self.health + 10
+        self.health = self.health + 15
         if self.health > self.maxHealth then self.health = self.maxHealth end
         self.heals = self.heals - 1
         self:move(DIRECTIONS.x, 0)
