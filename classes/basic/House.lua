@@ -27,25 +27,25 @@ function House:new(x, y, width, height, keyId)
   local currentX = x
   local currentY = y
   local isKeyCreated = false
-  for i = currentX, currentX + width do
+  for i = currentX - 1, currentX + width + 1 do
     drawHorizontalWall(i, y)
   end
-  for i = currentX, currentX + width do
+  for i = currentX - 1, currentX + width + 1 do
     drawHorizontalWall(i, y + height)
   end
-  for i = currentY, currentY + height - 1 do
+  for i = currentY - 1, currentY + height + 1 do
     if i ~= y + math.floor(height / 2) then
       drawVerticalWall(x, i)
     else
       drawDoor(x, i, keyId)
     end
   end
-  for i = currentY, currentY + height - 1 do
+  for i = currentY - 1, currentY + height + 1 do
     drawVerticalWall(x + width, i)
   end
   -- fill by nothing to prevent generating inside of house
-  for i = x, x + width - 1 do
-    for j = y, y + height - 1 do
+  for i = x, x + width do
+    for j = y, y + height do
       mediator:call('store.objects.addSpecial', Nothing:new(i, j))
       mediator:call('store.containers.addSpecial', Container:new('floor', i, j, false))
     end

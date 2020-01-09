@@ -83,10 +83,11 @@ function Creature:new(name, coordX, coordY, health, weapon)
   function newObj:getDirection(playerCoords)
     local xRange = self.coordX - playerCoords.x
     local yRange = self.coordY - playerCoords.y
-    
+    local step = {}
+
     if xRange < 0 then xRange = xRange * -1 end
     if yRange < 0 then yRange = yRange * -1 end
-
+    
     -- decide where to go by x
     if xRange ~= 0 then
       local step = {}
@@ -115,31 +116,40 @@ function Creature:new(name, coordX, coordY, health, weapon)
       if step.value then 
         local collision = collisionManager:findCollision(self.coordX + step.value, self.coordY )
 
-        if step.value and (not collision or collision.name == 'player') then
+        if not collision or collision.name == 'player' then
           return step
         end
       end
-     
+    
     end
 
+    step = {}
     -- decide where to go by y
     if yRange <= self.visionRange and xRange <= self.visionRange then
       if self.coordY > playerCoords.y then
-        return {
+        step =  {
           direction = DIRECTIONS.y,
           value = -1
         }
       else
-        return {
+        step =  {
           direction = DIRECTIONS.y,
           value = 1
         }
       end
     else
-      return {
+      step = {
         direction = DIRECTIONS.y,
         value = math.random(-1, 1)
       }
+    end
+    
+    if step.value then 
+      local collision = collisionManager:findCollision(self.coordX, self.coordY + step.value )
+
+      if not collision or collision.name == 'player' then
+        return step
+      end
     end
   end
 
