@@ -12,7 +12,7 @@ config = {
   startX = 50,
   startY = 50,
   mapPadding = 10,
-  effectsLimit = 1000,
+  effectsLimit = 0
 }
 
 return config

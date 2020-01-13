@@ -1,11 +1,16 @@
 -- classes
-local Container = require('classes/basic/Container') 
--- constants
-local CONTAINER_TYPES = require('constants/containers')
+local Floor = require('classes/containers/Floor') 
+local Fog = require('classes/containers/Fog') 
 
 function createContainer(x, y, container)
+  local map = {
+    floor = Floor,
+    fog = Fog
+  }
+
   if container then
-    return Container:new(container, x, y)
+    local Obj = map[container]
+    return Obj:new(x,y)
   end
 
   -- recomment when will be more than 1 effect
@@ -15,7 +20,7 @@ function createContainer(x, y, container)
   --   return Container:new(x, y, CONTAINER_TYPES.fog)
   -- end
   
-  return Container:new(CONTAINER_TYPES.fog, x, y, true)
+  return Fog:new(x, y)
 end
 
 return createContainer

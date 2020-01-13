@@ -4,6 +4,9 @@ local Shotgun = require('classes/items/Shotgun')
 local Key = require('classes/items/Key')
 local Bush = require('classes/objects/Bush')
 local Laser = require('classes/items/Laser')
+local Field = require('classes/basic/Field')
+local Fog = require('classes/containers/Fog')
+local Water = require('classes/objects/Water')
 -- constants
 local KEYS = require('constants/keys')
 local OBJECTS_TYPES = require('constants/objects') 
@@ -13,8 +16,17 @@ function drawMansion(objectsStore)
   local y = math.random(config.mapPadding + 1, config.mapHeight - config.mapPadding - 20)
   local result = objectsStore:drawHouse(x, y, math.random(10, 20), math.random(10, 20), KEYS.mansion)
   if not result then
-    return drawMansion()
+    return drawMansion(objectsStore)
   end
+end
+
+function drawField(Obj, store)
+  local x = math.random(1, config.mapWidth)
+  local y = math.random(1, config.mapHeight)
+  local width = math.random(5, 15)
+  local height = math.random(5, 15)
+  
+  Field:new(x, y, width, height, Obj, store)
 end
 
 function drawBarn(objectsStore)
@@ -22,7 +34,7 @@ function drawBarn(objectsStore)
   local y = math.random(config.mapPadding + 1, config.mapHeight - config.mapPadding - 20)
   local result = objectsStore:drawHouse(x, y, math.random(4, 6), math.random(4, 6), KEYS.barn)
   if not result then
-    return drawBarn()
+    return drawBarn(objectsStore)
   end
 end
 
@@ -48,10 +60,16 @@ function placeSecretLaser(itemsStore, objectsStore)
 end
 
 function loadGame(creaturesStore, itemsStore, objectsStore, containersStore)
+  for i = 1, math.random(5,10) do
+    drawField(Fog, 'containers')
+  end
+
+  for i = 1, 2 do
+    drawField(Water, 'objects')
+  end
 
   drawMansion(objectsStore)
   drawBarn(objectsStore)
-
   createBarnKey(itemsStore)
 
   placeSecretLaser(itemsStore, objectsStore)

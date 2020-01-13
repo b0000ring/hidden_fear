@@ -14,7 +14,7 @@ function createObject(x, y, specific)
   end
   if math.floor(math.random(1, 20)) == 1 then
     return Bush:new(x, y)
-  elseif  math.floor(math.random(1, 20)) == 2 then
+  elseif  math.floor(math.random(1, 10)) == 2 then
     return Trap:new(x, y)
   else 
     return Tree:new(x, y)

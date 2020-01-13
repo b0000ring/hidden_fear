@@ -34,6 +34,7 @@ local spritesMap = {
   [OBJECTS_TYPES.door] = load({'door'}),
   [OBJECTS_TYPES.trap] = load({'trap'}),
   [OBJECTS_TYPES.grass] = load({'grass1', 'grass2'}),
+  [OBJECTS_TYPES.water] = load({'water'}),
   -- items
   [ITEMS_TYPES.shotgun] = load({'shotgun'}),
   [ITEMS_TYPES.pistol] = load({'pistol'}),
