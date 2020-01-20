@@ -2,6 +2,8 @@
 local Creature = require('classes/basic/Creature')
 local ActionDescription = require('classes/basic/ActionDescription')
 local Action = require('classes/basic/Action')
+-- factories
+local createItem = require('factories/items')
 -- constants
 local TAGS = require('constants/tags')
 local ACTION_TYPES = require('constants/actionTypes')
@@ -75,6 +77,8 @@ function Player:new(x,y)
     return function()
       if self.weapon.name ~= WEAPONS_TYPES.fists then
         mediator:call('description.addAction', ActionDescription:new(self.name, DESCRIPTIONS.drop_weapon))
+        mediator:call('store.items.addSpecial', createItem(self.weapon.name, self.coordX, self.coordY, true))
+        
         self.weapon = weapons.fists
         return
       end

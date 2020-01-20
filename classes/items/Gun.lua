@@ -1,25 +1,27 @@
 -- classes
 local Item = require('classes/basic/Item')
--- collections
-local weapons = require('collections/weapons')
 -- constants
-local ITEMS_TYPES = require('constants/items')
 local WEAPONS_TYPES = require('constants/weapons')
 
-local Laser = {}
+local Gun = {}
 
-function Laser:new(x, y)
-  local newObj = Item:new(ITEMS_TYPES.laser, x, y)
+function Gun:new(type, isUsed, x, y)
+  local newObj = Item:new(type, x, y)
+
+  newObj.isUsed = isUsed or false
 
   function newObj:action(initiator)
     if initiator.weapon.name ~= WEAPONS_TYPES.fists then
       initiator:dropWeapon()()
     end
-    initiator.weapon = weapons.laser
+    self:addWeapon(initiator)
+    if not isUsed then
+      self:addBullets(initiator)
+    end
   end
 	
   self.__index = self
   return setmetatable(newObj, self)
 end
 
-return Laser
+return Gun

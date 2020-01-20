@@ -1,5 +1,5 @@
 -- classes
-local Item = require('classes/basic/Item')
+local Gun = require('classes/items/Gun')
 -- collections
 local weapons = require('collections/weapons')
 -- constants
@@ -7,11 +7,14 @@ local ITEMS_TYPES = require('constants/items')
 
 local Pistol = {}
 
-function Pistol:new(x, y)
-  local newObj = Item:new(ITEMS_TYPES.pistol, x, y)
+function Pistol:new(x, y, isUsed)
+  local newObj = Gun:new(ITEMS_TYPES.pistol, isUsed , x, y)
 
-  function newObj:action(initiator)
+  function newObj:addWeapon(initiator)
     initiator.weapon = weapons.pistol
+  end
+
+  function newObj:addBullets(initiator)
     initiator.bullets.pistol = initiator.bullets.pistol + 10
   end
 	
