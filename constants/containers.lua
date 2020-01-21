@@ -1,6 +1,7 @@
 local CONTAINERS = {
   floor = 'floor',
-  fog = 'fog'
+  fog = 'fog',
+  corpse = 'corpse'
 }
 
 return CONTAINERS

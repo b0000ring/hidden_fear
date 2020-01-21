@@ -49,6 +49,7 @@ local spritesMap = {
   night_effect = load({'night_effect'}),
   fog = load({'fog'}),
   floor = load({'floor'}),
+  corpse = load({'corpse'}),
 
 }
 
