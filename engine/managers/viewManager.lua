@@ -17,7 +17,7 @@ local lightning = require('engine/effects/lightning')
 -- windows
 local help = require('engine/windows/help')
 local inventory = require('engine/windows/inventory')
-
+local map = require('engine/windows/map')
 
 local viewManager = {
   font = nil,
@@ -31,6 +31,7 @@ local viewManager = {
   windows = {
     help = help,
     inventory = inventory, 
+    map = map,
   },
   views = {},
   sprites = {},
@@ -48,6 +49,7 @@ function viewManager:load(updateCallback)
 
   mediator:subscribe('control.main.show_help', 'view', self:setWindow('help'))
   mediator:subscribe('control.main.show_inventory', 'view', self:setWindow('inventory'))
+  mediator:subscribe('control.main.show_map', 'view', self:setWindow('map'))
   mediator:subscribe('control.interface.escape', 'view', self:closeWindow())
   mediator:subscribe('control.interface.return', 'view', self:closeWindow())
   mediator:subscribe('view.direction.change', 'view', self:changeDirection())
@@ -110,17 +112,16 @@ function viewManager:closeWindow()
 end
 
 function viewManager:setWindow(window)
-  
   return function()
     mediator:call('control.setMode', 'interface')
     self.window = window
   end
 end
 
--- this way of player sharing is not good
+-- this way of params sharing is not good
 function viewManager:showWindow(player)
   if self.window then
-    self.windows[self.window]:show(self.font, player)
+    self.windows[self.window]:show(self.font, player, self.map, fogMap.items)
   end
 end
 -- @TODO refactoring

@@ -11,6 +11,7 @@ inputActions['interface']['escape'] = 'escape'
 
 inputActions['main']['up'] = 'move_up'
 inputActions['main']['h'] = 'show_help'
+inputActions['main']['m'] = 'show_map'
 inputActions['main']['i'] = 'show_inventory'
 inputActions['main']['escape'] = 'escape'
 inputActions['main']['down'] = 'move_down'
