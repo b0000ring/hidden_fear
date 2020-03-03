@@ -25,6 +25,7 @@ local spritesMap = {
   [CREATURES_TYPES.zombie] = load({'zombie'}),
   [CREATURES_TYPES.boss] = load({'boss'}),
   [CREATURES_TYPES.imp] = load({'imp'}),
+  [CREATURES_TYPES.necromancer] = load({'necromancer'}),
   -- objects
   [OBJECTS_TYPES.bush] = load({'bush'}),
   [OBJECTS_TYPES.tree] = load({'tree1', 'tree2'}),

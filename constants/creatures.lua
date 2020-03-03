@@ -1,9 +1,10 @@
 local CREATURES = {
   boss = 'boss',
-  monster = 'monster',
+  monster = 'cursed wolf',
   player = 'player',
   zombie = 'zombie',
   imp = 'imp',
+  necromancer = 'necromancer'
 }
 
 return CREATURES
