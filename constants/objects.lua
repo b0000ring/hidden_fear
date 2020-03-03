@@ -7,6 +7,7 @@ local OBJECTS = {
   vertical_wall = 'vertical_wall',
   grass = 'grass',
   trap = 'trap',
+  stone = 'stone',
 }
 
 return OBJECTS
