@@ -10,6 +10,7 @@ local ACTION_TYPES = require('constants/actionTypes')
 local CREATURES_TYPES = require('constants/creatures')
 local DIRECTIONS = require('constants/directions')
 local WEAPONS_TYPES = require('constants/weapons')
+local ITEMS_TYPES = require('constants/items')
 local DESCRIPTIONS = require('constants/descriptions')
 -- collections
 local weapons = require('collections/weapons')
@@ -30,6 +31,15 @@ function Player:new(x,y)
     pistol = 0,
     shotgun = 0,
   }
+
+  function newObj:getViewRange() 
+    for key, val in pairs(self.items) do
+      if val == ITEMS_TYPES.torch then
+        return 3
+      end
+    end
+    return 2
+  end
 
   function newObj:onDead()
     mediator:call('player.dead')

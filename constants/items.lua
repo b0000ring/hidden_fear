@@ -7,7 +7,8 @@ local ITEMS = {
   pistol_bullets = 'pistol bullets',
   shotgun_bullets = 'shotgun bullets',
   laser = 'laser',
-  axe = 'axe'
+  axe = 'axe',
+  torch = 'torch'
 }
 
 return ITEMS

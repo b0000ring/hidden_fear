@@ -44,6 +44,7 @@ local spritesMap = {
   [ITEMS_TYPES.key] = load({'key'}),
   [ITEMS_TYPES.laser] = load({'laser'}),
   [ITEMS_TYPES.axe] = load({'axe'}),
+  [ITEMS_TYPES.torch] = load({'torch'}),
   -- effects
   night_effect = load({'night_effect'}),
   fog = load({'fog'}),

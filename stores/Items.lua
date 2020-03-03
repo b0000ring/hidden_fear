@@ -2,6 +2,7 @@
 local Store = require('classes/basic/Store')
 local Key = require('classes/items/Key')
 local Axe = require('classes/items/Axe')
+local Torch = require('classes/items/Torch')
 -- constants
 local ITEMS_TYPES = require('constants/items') 
 local KEYS = require('constants/keys')
@@ -19,14 +20,15 @@ local itemsFillList = {
   [ITEMS_TYPES.health] = config.healthLimit
 }
 
-function itemsStore:createAxe()
+function itemsStore:createSpecial(Item)
   local x = math.random(config.mapPadding + 1, config.mapWidth - config.mapPadding - 1)
   local y = math.random(config.mapPadding + 1, config.mapHeight - config.mapPadding - 1)
-  self.items[#self.items + 1] = Axe:new(x, y)
+  self.items[#self.items + 1] = Item:new(x, y)
 end
 
 function itemsStore:fill()
-  self:createAxe()
+  self:createSpecial(Axe)
+  self:createSpecial(Torch)
   for type in pairs(itemsFillList) do
     local items = {}
     while(#items < itemsFillList[type]) do

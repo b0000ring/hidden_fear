@@ -125,9 +125,9 @@ function viewManager:showWindow(player)
   end
 end
 -- @TODO refactoring
-function viewManager:drawFrame(playerCoords)
+function viewManager:drawFrame(playerCoords, viewRange)
   local grass = grassMap:getMap(function(type) return self:getSprite(type) end)
-  local fog = fogMap:getMap(playerCoords.x, playerCoords.y)
+  local fog = fogMap:getMap(playerCoords.x, playerCoords.y, viewRange)
   local viewBorders = viewManager:getViewBorders(playerCoords)
   local yoffset = 0
   
@@ -187,7 +187,7 @@ function viewManager:view(data)
   self:addToMap(data.objects, self.map)
   self:addToMap(data.containers, self.effects)
 
-  self:drawFrame(data.player:getCoords())
+  self:drawFrame(data.player:getCoords(), data.player:getViewRange())
   viewInterface(self.font, self.sprites, data.player)
   self:showWindow(data.player)
 end
