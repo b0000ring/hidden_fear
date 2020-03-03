@@ -21,7 +21,7 @@ end
 function engine:load()
   function love.load()
     viewManager:load()
-    audioManager:load()
+    -- audioManager:load()
   end
 end
 

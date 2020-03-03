@@ -6,7 +6,6 @@ local Bush = require('classes/objects/Bush')
 local Laser = require('classes/items/Laser')
 local Field = require('classes/basic/Field')
 local Fog = require('classes/containers/Fog')
-local Water = require('classes/objects/Water')
 -- constants
 local KEYS = require('constants/keys')
 local OBJECTS_TYPES = require('constants/objects') 
@@ -60,12 +59,8 @@ function placeSecretLaser(itemsStore, objectsStore)
 end
 
 function loadGame(creaturesStore, itemsStore, objectsStore, containersStore)
-  for i = 1, math.random(5,10) do
+  for i = 1, math.random(5,15) do
     drawField(Fog, 'containers')
-  end
-
-  for i = 1, 2 do
-    drawField(Water, 'objects')
   end
 
   drawMansion(objectsStore)
