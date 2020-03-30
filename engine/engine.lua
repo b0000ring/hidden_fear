@@ -21,15 +21,15 @@ end
 function engine:load()
   function love.load()
     viewManager:load()
-    -- audioManager:load()
+    audioManager:load()
   end
 end
 
 function engine:update(data)
-  function love.update()
+  function love.update(dt)
     function love.draw(drawable)
       if self.screen == screens.main then 
-        viewManager:view(data)
+        viewManager:view(data, dt)
       else
         viewManager:showScreen(self.screen)
       end

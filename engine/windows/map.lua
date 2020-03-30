@@ -20,7 +20,7 @@ function map:show(font, player, map, fogMap)
   for i = 1, config.mapWidth do
     for j = 1, config.mapHeight do
       local item = map[i][j]
-      if item then
+      if item and not fogMap[i][j] then
         if ITEMS_TYPES[item.data.name] then 
           love.graphics.setColor(255, 255, 0)
         elseif OBJECTS_TYPES[item.data.name] then

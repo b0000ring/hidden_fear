@@ -9,6 +9,7 @@ local screens = require('constants/screens')
 local spritesMap = require('engine/maps/spritesMap')
 local grassMap = require('engine/maps/grassMap')
 local fogMap = require('engine/maps/fogMap')
+local animationsMap = require('engine/maps/animationsMap')
 -- view interface function
 local viewInterface = require('engine/interface')
 -- effects
@@ -18,6 +19,8 @@ local lightning = require('engine/effects/lightning')
 local help = require('engine/windows/help')
 local inventory = require('engine/windows/inventory')
 local map = require('engine/windows/map')
+-- classes
+local Animation = require('engine/Animation')
 
 local viewManager = {
   font = nil,
@@ -35,6 +38,7 @@ local viewManager = {
   },
   views = {},
   sprites = {},
+  animations = {},
   audio = {},
   map = {},
   effects = {},
@@ -43,7 +47,12 @@ local viewManager = {
 
 function viewManager:load(updateCallback)
   for key, val in pairs(spritesMap) do
-    self.sprites[key] = val(self.loadSprite)
+    local sprite = val(self.loadSprite)
+    if(animationsMap[key]) then
+      self.animations[key] = Animation:new(sprite())
+    end
+    
+    self.sprites[key] = sprite
   end
   self.font = love.graphics.newFont('assets/fonts/manaspc.ttf')
 
@@ -74,12 +83,26 @@ function viewManager:getSprite(name)
   return self.sprites[name]()
 end
 
+function viewManager:getQuad(name, sprite)
+  local animation = self.animations[name]
+  if(animation) then 
+    return animation:getFrame()
+  end
+  return love.graphics.newQuad(0, 0, 32, sprite:getHeight(), sprite:getDimensions())
+end
+
 function viewManager:clearMap(map)
   for i = 1, config.mapWidth do
     map[i] = {}
     for j = 1, config.mapHeight do
       map[i][j] = nil
     end
+  end
+end
+
+function viewManager:updateAnimations(dt)
+  for key, val in pairs(self.animations) do
+    val:update(dt)
   end
 end
 
@@ -140,7 +163,7 @@ function viewManager:drawFrame(playerCoords, viewRange)
         if self.effects[j][i] and not fog[j][i] then
           local drawable = self.effects[j][i]
           if not drawable.data.overlapping then
-            love.graphics.draw(drawable.sprite, xoffset, yoffset)
+            love.graphics.draw(drawable.sprite, self:getQuad(drawable.data.name, drawable.sprite), xoffset, yoffset)
           end
         end
         -- draw content
@@ -150,15 +173,15 @@ function viewManager:drawFrame(playerCoords, viewRange)
           local offsetx = 0
           if self.directions[drawable.data.id] == 'left'then 
             scale = -1
-            offsetx = drawable.sprite:getWidth()
+            offsetx = 32
           end
-          love.graphics.draw(drawable.sprite, xoffset, yoffset - (drawable.sprite:getHeight() - 32), 0, scale, 1, offsetx)
+          love.graphics.draw(drawable.sprite, self:getQuad(drawable.data.name, drawable.sprite), xoffset, yoffset - (drawable.sprite:getHeight() - 32), 0, scale, 1, offsetx)
         end
         -- draw upper effects
         if self.effects[j][i] and not fog[j][i] then
           local drawable = self.effects[j][i]
           if drawable.data.overlapping then
-            love.graphics.draw(drawable.sprite, xoffset, yoffset)
+            love.graphics.draw(drawable.sprite, self:getQuad(drawable.data.name, drawable.sprite), xoffset, yoffset)
           end
         end
         -- @TODO refactoring this
@@ -179,7 +202,8 @@ function viewManager:drawFrame(playerCoords, viewRange)
   lightning:makeFrame()
 end
 
-function viewManager:view(data)
+function viewManager:view(data, dt)
+  self:updateAnimations(dt)
   self:clearMap(self.map)
   self:clearMap(self.effects)
   self:addToMap(data.items, self.map)
